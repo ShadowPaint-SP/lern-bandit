@@ -1,0 +1,12 @@
+{
+  "name": "lern-bandit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Deutsch und Mathe mit drei drehenden Walzen",
+  "scripts": {
+    "test": "node tests/check-word-selection.cjs && node tests/check-math.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

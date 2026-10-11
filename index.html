@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Deutsch und Mathe mit dem einarmigen Banditen: echte Wörter lesen und Rechenaufgaben lösen. Funktioniert auch offline.">
+<title>Lern-Bandit · Deutsch und Mathe</title>
+<style>
+@font-face{font-family:'GrundschriftRegular';src:url(data:font/otf;base64,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) format('opentype');font-weight:normal;font-style:normal;font-display:block}
+:root{color-scheme:light;--ink:#292b2b;--paper:#f7f4eb;--yellow:#f5d876;--coral:#df4537;--line:#d7dcd4}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-rounded,"Avenir Next",Avenir,"Trebuchet MS",sans-serif}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:disabled{cursor:default;opacity:.5}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #187467;outline-offset:5px}[hidden]{display:none!important}
+main{max-width:970px;margin:auto;padding:34px 30px 24px}.topbar{display:flex;justify-content:space-between;gap:16px;align-items:center}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:17px}.brandmark{height:39px;width:39px;display:grid;place-items:center;background:var(--ink);color:var(--yellow);border-radius:12px;font-size:25px}.quiet-button{background:transparent;border:1.5px solid var(--ink);border-radius:12px;padding:11px 16px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}.quiet-button:hover{background:#e8eee4}.intro{text-align:center;margin:43px 0 25px}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;text-transform:uppercase;color:#597266;margin:0 0 11px}h1{font-size:clamp(34px,5vw,52px);line-height:1.12;letter-spacing:-1.8px;margin:0 0 12px;font-weight:800}.segmented{display:flex;width:fit-content;border:1px solid #cbd3c9;border-radius:11px;padding:4px;gap:3px;background:#eeeee5}.segmented button{background:transparent;border:0;padding:8px 15px;border-radius:7px;font-size:13px;font-weight:700}.segmented button[aria-pressed=true]{background:var(--ink);color:white}
+.machine{position:relative;padding:28px 30px 27px;border:3px solid var(--ink);border-radius:26px;background:linear-gradient(130deg,#ffe879,#ffdc4b);box-shadow:0 8px 0 var(--ink)}.reels{display:flex;gap:15px}.reel{flex:1;min-width:0;border:2.5px solid var(--ink);border-radius:17px;background:#fffef8;box-shadow:0 4px 0 #263a3a26;position:relative;overflow:hidden}
+.machine-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:25px}.instruction{font-size:16px;font-weight:700;margin:0 0 5px}.subinstruction{font-size:13px;line-height:1.5;color:#49655b;margin:0}.spin-button{display:flex;align-items:center;justify-content:center;gap:12px;background:var(--coral);color:#fffdf6;border:2px solid var(--ink);border-radius:13px;box-shadow:0 4px 0 var(--ink);font-size:18px;font-weight:800;padding:16px 26px;white-space:nowrap}.spin-button:hover:enabled{background:#dc5b40}.spin-button:active:enabled{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}.filter-summary{font-size:12px;color:#66746b;line-height:1.7;margin:13px 0 0;text-align:center}.empty{background:#fff3d9;border:1px solid #dcbf76;border-radius:12px;padding:18px;line-height:1.6;margin-bottom:18px}.bottom-note{display:flex;justify-content:space-between;gap:15px;border-top:1px solid var(--line);padding-top:17px;margin-top:24px;font-size:12px;color:#66746b;line-height:1.6}.bottom-note a{color:inherit;text-underline-offset:3px}details{max-width:660px;margin:16px auto 0;font-size:12px;color:#66746b;line-height:1.7}summary{cursor:pointer;width:fit-content}details p{margin:8px 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+dialog{border:2px solid var(--ink);border-radius:22px;background:var(--paper);color:var(--ink);padding:26px;width:min(650px,calc(100% - 26px));max-height:90vh;box-shadow:0 10px 40px #263a3a25}dialog::backdrop{background:#1b303b77}dialog h2{font-size:26px;letter-spacing:-.5px;margin:0}dialog .dialog-top{display:flex;align-items:center;justify-content:space-between;gap:12px}dialog .close{background:none;border:0;font-size:28px;padding:3px 8px}dialog .description{font-size:14px;line-height:1.65;color:#637166;margin:12px 0 20px}.presets{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}.presets button{border:1px solid #b7c7b7;background:#e7eee1;border-radius:9px;padding:9px 12px;font-size:13px;font-weight:700}fieldset{border:0;padding:0;margin:0 0 21px}legend{font-size:13px;font-weight:800;margin-bottom:10px}.choices{display:flex;flex-wrap:wrap;gap:7px}.choice input{position:absolute;opacity:0;width:1px;height:1px}.choice span{display:grid;place-items:center;min-width:42px;height:40px;padding:0 10px;border:1px solid #c9d0c3;border-radius:9px;background:#fffef9;font-size:17px;cursor:pointer}.choice input:checked+span{background:var(--ink);border-color:var(--ink);color:white}.choice input:focus-visible+span{outline:3px solid #187467;outline-offset:3px}.preview-count{border-top:1px solid var(--line);padding-top:16px;font-size:14px;line-height:1.7;margin-bottom:16px}.dialog-actions{display:flex;justify-content:flex-end;gap:10px}.dialog-actions button{border-radius:10px;padding:11px 17px;font-size:14px;font-weight:700}.cancel{border:1px solid #bfcbbb;background:transparent}.apply{border:1px solid var(--ink);background:var(--ink);color:white}
+@media(max-width:650px){main{padding:22px 17px}.intro{margin-top:32px}.brand{font-size:15px;gap:8px}.brandmark{width:32px;height:32px;font-size:22px}.quiet-button{padding:9px 10px;font-size:12px}.segmented button{padding:8px 9px;font-size:12px}.machine{padding:20px 14px;border-radius:20px}.reels{gap:8px}.reel{border-radius:12px;border-width:2px}.machine-bottom{flex-direction:column;text-align:center;gap:16px;margin-top:19px}.spin-button{width:100%;padding:13px 20px}.bottom-note{flex-direction:column;gap:4px}.filter-summary{font-size:11px}dialog{padding:21px}dialog h2{font-size:23px}}
+/* Drei feste, zylindrische Walzen mit unabhängig laufenden Silbenstreifen. */
+.intro{margin:26px 0 19px}.intro h1{font-size:clamp(34px,5vw,46px)}
+.machine{border:10px solid var(--ink);border-radius:39px;padding:23px 27px 22px;background:linear-gradient(130deg,#ffe879,#ffdc4b)}
+.reels{--reel-h:236px;--reel-border:7px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.reel{height:var(--reel-h);border:var(--reel-border) solid var(--ink);border-radius:25px;box-shadow:none;background:white;--cell-h:calc(var(--reel-h) - var(--reel-border)*2)}
+.reel:after{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;box-shadow:inset 0 25px 30px #00000024,inset 0 -25px 30px #00000024;border-radius:17px}
+.strip{will-change:transform}.cell{height:var(--cell-h);display:flex;align-items:center;justify-content:center;line-height:1;padding:0 5px;white-space:nowrap;font-family:GrundschriftRegular,"Trebuchet MS",sans-serif;font-size:clamp(46px,8vw,102px);font-weight:400}
+.cell.long{font-size:clamp(30px,5.5vw,68px)}.cell.extra-long{font-size:clamp(23px,4vw,48px)}.cell.is-star{font-family:Arial,sans-serif;font-size:clamp(48px,9vw,111px);color:#eab52b;text-shadow:0 3px 0 #bf8316}
+.reel.rolling .strip{filter:blur(.35px)}.machine-bottom{flex-direction:column-reverse;text-align:center;gap:20px;margin-top:27px}
+.spin-button{width:min(370px,90%);border:7px solid var(--ink);border-radius:22px;padding:12px 20px;font-family:GrundschriftRegular,"Trebuchet MS",sans-serif;font-size:39px;font-weight:400;box-shadow:0 5px 0 var(--ink)}
+.instruction{font-family:GrundschriftRegular,"Trebuchet MS",sans-serif;font-weight:400;font-size:25px}.subinstruction{color:#5a5940}
+.jackpot .reel{background:#fff5be}.jackpot{animation:jackpot-glow 2.8s ease-in-out}
+.party{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:10}.confetti{position:absolute;top:-30px;left:var(--x);width:10px;height:16px;background:var(--color);border-radius:2px;animation:confetti-fall 2.7s var(--delay) ease-in forwards}
+@keyframes confetti-fall{0%{transform:translateY(-30px) rotate(0);opacity:1}90%{opacity:1}100%{transform:translate(var(--drift),110vh) rotate(var(--turn));opacity:0}}
+@keyframes jackpot-glow{0%,100%{box-shadow:0 8px 0 var(--ink)}40%{box-shadow:0 8px 0 var(--ink),0 0 38px #f4b82d}70%{box-shadow:0 8px 0 var(--ink),0 0 38px #e784ac}}
+.jackpot-setting{padding:15px 0 19px;border-top:1px solid var(--line);font-size:14px}.jackpot-setting label{display:flex;gap:10px;align-items:center;font-weight:700}.jackpot-setting input{width:18px;height:18px;accent-color:var(--ink)}.jackpot-setting p{font-size:12px;color:#66746b;margin:7px 0 0;line-height:1.6}
+@media(max-width:650px){.machine{border-width:7px;border-radius:28px;padding:18px 12px}.reels{--reel-h:166px;--reel-border:5px;gap:8px}.reel{border-radius:18px}.reel:after{border-radius:12px;box-shadow:inset 0 18px 20px #00000022,inset 0 -18px 20px #00000022}.cell{font-size:clamp(32px,10vw,69px)}.cell.long{font-size:clamp(22px,7.5vw,48px)}.cell.extra-long{font-size:clamp(18px,5.3vw,35px)}.cell.is-star{font-size:clamp(43px,12vw,75px)}.spin-button{border-width:5px;font-size:32px;padding:9px 15px}.machine-bottom{gap:16px}.instruction{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.jackpot{animation:none}.confetti{display:none}}
+.subject-tabs{display:flex;justify-content:center;gap:5px;margin:28px auto 0;width:fit-content;padding:5px;background:#ecece3;border:1px solid #cbd3c9;border-radius:14px}.subject-tabs button{border:0;border-radius:9px;padding:10px 27px;background:transparent;font-weight:800;font-size:15px}.subject-tabs button[aria-selected=true]{background:var(--ink);color:white}.math-result{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;min-height:92px;margin-top:25px;padding:18px;border:2px dashed #acb9ac;border-radius:18px;background:#ecefe4;font-weight:700;font-size:16px}.math-result:hover{background:#e2e9d9}.math-result[aria-expanded=true]{border-style:solid}.math-result strong{max-width:100%;overflow-wrap:anywhere;font-size:clamp(20px,5.6vw,30px);line-height:1.2;font-variant-numeric:tabular-nums}.math-result[aria-expanded=true] .result-label{font-size:12px;color:#637166}.cell.is-number{font-variant-numeric:tabular-nums}.cell.is-number.digits-3{font-size:clamp(36px,6.8vw,80px)}.cell.is-number.digits-4{font-size:clamp(28px,5.2vw,62px)}.math-choices .choice span{height:auto;min-height:62px;padding:10px 18px;display:flex;flex-direction:column;gap:6px;font-size:16px;font-weight:700}.math-choices small{font-size:12px;font-weight:400}
+@media(max-width:650px){.subject-tabs{margin-top:22px}.subject-tabs button{padding:9px 24px}.cell.is-number.digits-3{font-size:clamp(26px,8.8vw,55px)}.cell.is-number.digits-4{font-size:clamp(21px,6.7vw,42px)}}
+.cell.is-number.digits-5{font-size:clamp(22px,4.2vw,50px)}.cell.is-number.digits-6{font-size:clamp(20px,3.6vw,43px)}.cell.is-number.digits-7{font-size:clamp(18px,3.1vw,36px)}
+@media(max-width:650px){.cell.is-number.digits-5{font-size:clamp(19px,5.4vw,34px)}.cell.is-number.digits-6{font-size:clamp(16px,4.5vw,28px)}.cell.is-number.digits-7{font-size:clamp(14px,3.9vw,25px)}}
+#math-operations .choice span{min-height:42px}
+.settings-error{color:#a32a21;background:#fff0eb;border:1px solid #cd5a4d;border-radius:10px;padding:12px;font-size:14px;line-height:1.6;margin:14px 0}
+</style>
+</head>
+<body>
+<main>
+ <header class="topbar">
+  <div class="brand"><span class="brandmark" aria-hidden="true">S</span><span id="brand-name">Silben-Bandit</span></div>
+  <button class="quiet-button" id="settings-open" type="button"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7"/><circle cx="7" cy="5" r="2" fill="var(--paper)" stroke="currentColor"/><circle cx="13" cy="10" r="2" fill="var(--paper)" stroke="currentColor"/><circle cx="7" cy="15" r="2" fill="var(--paper)" stroke="currentColor"/></svg> Einstellungen</button>
+ </header>
+ <nav class="subject-tabs" role="tablist" aria-label="Lernfach"><button id="tab-deutsch" type="button" role="tab" aria-selected="true" aria-controls="game" data-subject="deutsch">Deutsch</button><button id="tab-mathe" type="button" role="tab" aria-selected="false" aria-controls="game" tabindex="-1" data-subject="mathe">Mathe</button></nav>
+ <div id="game" role="tabpanel" aria-labelledby="tab-deutsch">
+ <section class="intro"><p class="eyebrow" id="eyebrow">Drehen. Silben lesen. Wörter entdecken.</p><h1 id="game-title">Welches Wort kommt als Nächstes?</h1></section>
+ <div class="empty" id="empty" role="status" hidden></div>
+ <section class="machine" id="machine" aria-label="Silbenmaschine">
+  <div class="reels" id="reels" aria-hidden="true"></div>
+  <div class="machine-bottom"><div><p class="instruction" id="instruction">Lies das Wort Silbe für Silbe.</p><p class="subinstruction" id="subinstruction">Was steht auf den Walzen?</p></div><button class="spin-button" id="spin" type="button"><span id="spin-label">START</span></button></div>
+ </section>
+ <button class="math-result" id="math-reveal" type="button" aria-expanded="false" aria-controls="math-result" hidden><span class="result-label" id="result-label">Ergebnis aufdecken</span><strong id="math-result" hidden></strong></button>
+ <p class="filter-summary" id="filter-summary"></p>
+ <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+ </div>
+ <footer class="bottom-note"><span id="bank-note"></span><span>Auch offline nutzbar · Keine Anmeldung</span></footer>
+ <details><summary id="about-title">Wie werden die Wörter ausgewählt?</summary><div id="about-deutsch"><p>Die Maschine wählt ein vollständiges Wort mit hinterlegten Silben. Nach dem Drehen ergeben die Silben von links nach rechts ein echtes Wort. Bei zwei Silben steht ein Stern an einer zufälligen Stelle. Überspringe ihn beim Lesen. Drei Sterne sind ein Glückstreffer.</p><p>Es erscheinen nur Wörter mit den ausgewählten Buchstaben und Lautverbindungen. Gibt es keinen Treffer, wartet die Maschine auf eine neue Auswahl. Die Silben sind als Lesesilben hinterlegt, zum Beispiel Son-ne, Kat-ze und E-sel.</p></div><div id="about-mathe" hidden><p>Beide Zahlen werden aus den aktivierten Bereichen gewählt. Bei Minus steht die größere Zahl links, sodass das Ergebnis mindestens null ist. Die Zahlen auf den Walzen stammen aus den ausgewählten Bereichen. Das Ergebnis überschreitet die höchste ausgewählte Grenze nur, wenn du in den Einstellungen Ergebnisse außerhalb des Zahlenbereichs erlaubst. Tippe auf das Ergebnisfeld, um die Lösung aufzudecken oder wieder zu verdecken.</p><p>Wenn Drei-Sterne-Treffer aktiviert sind, erscheinen mit einer Chance von 6 % drei Sterne statt einer Aufgabe. Spätestens beim zehnten Dreh nach dem letzten Treffer kommen drei Sterne. Mit START geht es danach weiter.</p></div><p>Eigenständige Umsetzung, inspiriert vom <a href="https://grundschul.tools/deutsch/silben-bandit.html" target="_blank" rel="noopener noreferrer">Silben-Bandit auf grundschul.tools</a>. Schrift: Grundschrift von Christian Urff, unverändert eingebettet, <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0</a>.</p></details>
+</main>
+<dialog id="settings" aria-labelledby="settings-title" aria-describedby="settings-description">
+ <form id="settings-form">
+  <div class="dialog-top"><h2 id="settings-title">Einstellungen</h2><button class="close" id="settings-close" type="button" aria-label="Einstellungen schließen">×</button></div>
+  <p class="description" id="settings-description">Wähle die Silbenanzahl und die bekannten Buchstaben und Lautverbindungen. Die Maschine zeigt nur passende Wörter.</p>
+  <div id="deutsch-settings">
+  <fieldset><legend>Silbenanzahl</legend><div class="segmented" role="group" aria-label="Silbenanzahl">
+   <button type="button" data-length="all" aria-pressed="true">Gemischt</button>
+   <button type="button" data-length="2" aria-pressed="false">2 Silben</button>
+   <button type="button" data-length="3" aria-pressed="false">3 Silben</button>
+  </div></fieldset>
+  <div class="presets"><button type="button" id="preset-all">Alles auswählen</button><button type="button" id="preset-first">Erste Wörter</button><button type="button" id="preset-none">Auswahl leeren</button></div>
+  <fieldset><legend>Vokale und Umlaute</legend><div class="choices" id="vowels"></div></fieldset>
+  <fieldset><legend>Konsonanten</legend><div class="choices" id="consonants"></div></fieldset>
+  <fieldset><legend>Lautverbindungen</legend><div class="choices" id="connections"></div></fieldset>
+  <div class="jackpot-setting"><label><input type="checkbox" id="jackpot-enabled" checked>Drei-Sterne-Treffer</label><p>Zufällig möglich und spätestens beim zehnten Dreh nach dem letzten Treffer.</p></div>
+  <div class="preview-count" id="preview-count" role="status" aria-live="polite" aria-atomic="true"></div>
+  </div>
+  <div id="mathe-settings" hidden>
+   <fieldset><legend>Zahlenbereiche</legend><div class="choices math-choices" id="math-ranges"></div></fieldset>
+   <fieldset><legend>Rechenzeichen</legend><div class="choices math-choices" id="math-operations"></div></fieldset>
+   <div class="jackpot-setting"><label><input type="checkbox" id="math-allow-overflow">Ergebnisse außerhalb des Zahlenbereichs erlauben</label></div>
+   <div class="jackpot-setting"><label><input type="checkbox" id="math-jackpot-enabled" checked>Drei-Sterne-Treffer</label><p>Zufällig möglich und spätestens beim zehnten Dreh nach dem letzten Treffer.</p></div>
+   <div class="preview-count" id="math-preview" role="status" aria-live="polite" aria-atomic="true"></div>
+   <p class="settings-error" id="math-settings-error" role="alert" tabindex="-1" hidden></p>
+  </div>
+  <div class="dialog-actions"><button class="cancel" id="cancel" type="button">Abbrechen</button><button class="apply" type="submit">Übernehmen</button></div>
+ </form>
+</dialog>
+<div class="party" id="party" aria-hidden="true" hidden></div>
+<script>
+'use strict';
+// Ein Eintrag ist ein vollständiges Wort mit festgelegten Lesesilben.
+// Zum Erweitern hier ein echtes Wort mit Bindestrichen zwischen den Silben ergänzen.
+const WORD_SOURCE = `
+Ma-ma Pa-pa O-ma O-pa La-ma Na-se Ro-se Ho-se Ha-se Va-se
+Do-se So-fa To-ma-te Ba-na-ne Sa-la-mi Me-lo-ne Au-to Am-pel A-mei-se A-na-nas
+E-sel E-le-fant I-gel Eu-le Feu-er Af-fe En-te Kat-ze Hun-de Tie-re
+Lö-we Ti-ger Ze-bra Pan-da Ko-a-la Gi-raf-fe Ka-mel Pa-pa-gei Kro-ko-dil Pin-gu-in
+Pe-li-kan Del-fin Bie-ne Kä-fer Mü-cke Spin-ne Schlan-ge Schne-cke Rau-pe Pfer-de
+Schwei-ne Zie-ge Scha-fe Kü-ken Hüh-ner Tau-be Vo-gel Mäu-se Füch-se Son-ne
+Ster-ne Him-mel Wol-ke Re-gen Schnee-flo-cke Win-ter Som-mer Früh-ling Wet-ter Ge-wit-ter
+Blu-me Blü-te Tul-pe Bäu-me Blät-ter Wie-se Gar-ten Er-de In-sel Ber-ge
+Was-ser Wel-le Mu-schel Stei-ne U-fer Ha-fen Ap-fel Bir-ne Pflau-me Kir-sche
+Trau-be Erd-bee-re Him-bee-re Zi-tro-ne Kar-tof-fel Ka-rot-te Gur-ke Sa-lat Kür-bis Zwie-bel
+Nu-del But-ter Kä-se Zu-cker Ku-chen Tor-te Waf-fel Kek-se Bröt-chen Ho-nig
+Pud-ding Pop-corn Ta-sche Schu-le Klas-se Ta-fel Hef-te Bü-cher Sei-te Fe-der
+Fül-ler Li-ne-al Sche-re Kle-ber Pin-sel Far-be Pa-pier Blei-stif-te Le-ser Le-se-buch
+Rech-nen Le-sen Ma-len Ler-nen Schrei-ben Sin-gen Spie-len La-chen Ren-nen Tan-zen
+Tur-nen Ba-den Su-chen Hö-ren Se-hen Sa-gen Fra-gen Tra-gen Ru-fen Bau-en
+Kau-fen Hel-fen Tei-len Kin-der Freun-de Mut-ter Va-ter Bru-der Schwes-ter Fa-mi-lie
+Zim-mer Kü-che Kel-ler Fens-ter Tü-ren Trep-pe Bet-ten Kis-sen De-cke Lam-pe
+So-cken Ja-cke Müt-ze Schu-he Ho-sen Man-tel Klei-der Tel-ler Tas-se Ga-bel
+Löf-fel Mes-ser Fla-sche Ei-mer Be-sen Sei-fe Spie-gel Uh-ren Bil-der Kis-te
+Fla-schen Fahr-rad Rol-ler Bag-ger Ra-ke-te Ro-bo-ter Po-li-zei Feu-er-wehr Trak-tor Schif-fe
+Brü-cke Stra-ße Rei-se Schau-kel Rut-sche Pup-pe Mur-mel Bau-stei-ne Puz-zle Dra-che
+Pi-rat Rit-ter Prin-zes-sin Kro-ne Zau-be-rer Lei-ter Lei-se Lau-te Ro-te Grü-ne
+Blau-e Gel-be Bun-te Klei-ne Gro-ße A-bend Mor-gen Mit-tag Mit-ter-nacht Stun-de
+Mi-nu-te Se-kun-de Wo-che Mo-nat Jah-re Mon-tag Diens-tag Mitt-woch Don-ners-tag Frei-tag
+Sams-tag Sonn-tag Ja-nu-ar Fe-bru-ar Au-gust Sep-tem-ber Ok-to-ber No-vem-ber De-zem-ber Fe-ri-en
+Ur-laub Ge-burts-tag Os-tern Weih-nach-ten Sil-ves-ter Ka-len-der Ter-min Pau-se Fei-er Fes-te
+Au-ge Au-gen Oh-ren Hän-de Fin-ger Dau-men Bei-ne Fü-ße Ar-me Schul-ter
+Rü-cken Lip-pe Lip-pen Zun-ge Zäh-ne Wan-ge Wan-gen Haa-re Lo-cke Lo-cken
+Na-bel Kör-per Mus-kel Her-zen Ge-sicht Ge-hirn Ge-lenk At-mung hus-ten Schnup-fen
+Fie-ber Pflas-ter Sal-be Ge-sund-heit Kran-ken-haus Zahn-arzt Ärz-tin kran-ke Wun-de Wun-den
+Tan-te On-kel Cou-si-ne El-tern Groß-mut-ter Groß-va-ter Groß-el-tern Nach-bar Nach-ba-rin Nach-barn
+Freun-din Freun-din-nen jun-ge Jun-gen Mäd-chen Ba-by Ba-bys Men-schen Leu-te Leh-rer
+Leh-re-rin Schü-ler Schü-le-rin Gäs-te Be-such Part-ner Part-ne-rin Hel-fer Hel-fe-rin Sie-ger
+Sie-ge-rin Ge-schich-te Ge-dicht Mär-chen Rät-sel Rei-me Reim-wort Wör-ter Sil-ben Buch-sta-be
+An-fang En-de Mit-te Ti-tel Zei-le Zei-len Ab-satz Fra-ge Ant-wort Auf-ga-be
+Ü-bung Bei-spiel Lö-sung Feh-ler Er-folg No-te No-ten Zeug-nis Schul-ta-sche Schul-heft
+Schul-buch Schul-hof Schul-weg Turn-hal-le Sport-platz Sport-ta-sche Turn-beu-tel Turn-schu-he Stun-den-plan Schul-bank
+Kreu-ze Krei-se Li-nie Li-nien Punk-te Zah-len Rech-nung Re-chen-heft Bunt-stif-te Filz-stif-te
+Farb-stif-te Filz-stift Bunt-stift Blei-stift Mal-kas-ten Mal-buch Mal-block Mal-heft Mal-stif-te Kleb-stoff
+Kle-be-band Hef-ter Map-pe Map-pen Ord-ner Lo-cher Stem-pel Schreib-heft Spit-zer Schreib-tisch
+Sitz-platz Sitz-plät-ze Tisch-plat-te Com-pu-ter Tas-ta-tur Bild-schirm Dru-cker Lap-top Ta-blet Han-dy
+Ka-me-ra Te-le-fon Ra-dio Laut-spre-cher Kopf-hö-rer In-ter-net Ge-schenk Ge-schen-ke Ge-bäck Ge-päck
+Re-gal Re-ga-le Schrank-tür Schrän-ke Ses-sel Stüh-le Ho-cker Tisch-de-cke Tisch-bein Tisch-bei-ne
+Nacht-tisch Schlaf-zim-mer Wohn-zim-mer Dach-bo-den Haus-tür Haus-dach Haus-wand Haus-wän-de Haus-num-mer Bal-kon
+Ter-ras-se Ga-ra-ge Mau-er Mau-ern Zaun-pfahl Zaun-pfäh-le Zäu-ne Brief-kas-ten Klin-gel Schlüs-sel
+Schloss-tür Gar-di-ne Vor-hang Vor-hän-ge Tep-pich Tep-pi-che Bil-der-buch Hei-zung Ka-min O-fen
+Ö-fen Herd-plat-te Steck-do-se Ste-cker Ka-bel Lam-pen Licht-schal-ter Fens-ter-bank Fens-ter-brett Fens-ter-glas
+Roll-la-den Schub-la-de Schub-la-den Du-sche Wasch-be-cken Hand-tuch Hand-tü-cher Zahn-bürs-te Zahn-pas-ta Was-ser-hahn
+Toi-let-te Klo-pa-pier Schwamm-tuch Wasch-lap-pen Wä-sche Wä-sche-korb Bü-gel Bü-gel-brett Müll-ei-mer Ab-fall
+Müll-ton-ne Kehr-schau-fel Putz-lap-pen Staub-sau-ger Staub-we-del Putz-ei-mer Hei-mat Woh-nung Woh-nun-gen Dorf-platz
+Dör-fer Städ-te Ge-mein-de Land-kar-te Bä-cker Bä-cke-rin Metz-ger Metz-ge-rin Koch-kunst Kö-che
+Kö-chin Kö-chin-nen Bau-er Bäu-e-rin Bau-ern-hof Bau-ern Flei-scher Flei-sche-rin Gärt-ner Gärt-ne-rin
+Tisch-ler Tisch-le-rin Ma-ler Ma-le-rin Fah-rer Fah-re-rin Bus-fah-rer Post-bo-te Post-bo-tin Pi-lo-ten
+Pi-lot Pi-lo-tin Ka-pi-tän Ver-käu-fer Kauf-mann Kauf-frau Fri-seur Fri-seu-rin Feu-er-mann Feu-er-frau
+Ret-tung Ret-ter Ret-te-rin Bä-cke-rei Bü-che-rei Mu-se-um The-a-ter Ki-no Zir-kus Ho-tel
+Rat-haus Bahn-hof Flug-ha-fen Spiel-platz Schwimm-bad Hal-len-bad Frei-bad Ge-he-ge Tier-park Stadt-park
+Kauf-haus La-den Lä-den Su-per-markt Markt-platz Park-platz Park-plät-ze Spiel-stra-ße Fuß-gän-ger Rad-weg
+Bür-ger Bür-ge-rin Ver-kehr Fahr-bahn Fahr-zeug Fahr-zeu-ge Fahr-kar-te Fahr-plan Au-to-bahn Au-to-bus
+Au-to-dach Au-to-tür Mo-tor Mo-to-ren Mo-tor-rad Mo-ped Trak-to-ren Last-wa-gen Renn-wa-gen Post-au-to
+Ta-xi Ta-xis Stra-ßen-bahn Schul-bus Rei-se-bus Gü-ter-zug Wa-gen Wag-gon Rä-der Rei-fen
+Len-ker Spei-che Spei-chen Brem-se brem-sen Ket-te Fahr-rad-helm Fahr-rad-weg Fahr-rad-licht Luft-pum-pe
+Sat-tel Se-gel Se-gel-boot Ru-der Ru-der-boot Ka-nu Ka-nus Fäh-re Fäh-ren Damp-fer
+Schiffs-bug Schiffs-mast Schiffs-deck Leucht-turm Leucht-tür-me An-ker Flug-zeug Flug-zeu-ge Flü-gel Pro-pel-ler
+Raum-schiff Raum-fah-rer Raum-son-de Welt-all Pla-net Pla-ne-ten Mer-kur Ve-nus Sa-turn Nep-tun
+Ju-pi-ter Him-mels-zelt Mond-licht Son-nen-licht Son-nen-schein Son-nen-hut Son-nen-creme Son-nen-schirm Re-gen-schirm Schnee-mann
+Schnee-ball Schnee-bäl-le Schnee-de-cke Schnee-flo-cken Eis-blu-me Eis-blu-men Eis-zap-fen Eis-bär Eis-bä-ren Schlit-ten
+Schlitt-schu-he Ski-er Frost-nacht Win-ter-tag Win-ter-zeit Som-mer-tag Som-mer-zeit Som-mer-hut Früh-lings-tag Früh-lings-zeit
+Herbst-tag Herbst-zeit Herbst-blatt Herbst-blät-ter Herbst-wind Wind-rad Wind-rä-der Wind-müh-le Stür-me Blit-ze
+Don-ner Ne-bel Ha-gel Tau-trop-fen Tro-cken-heit Wär-me Hit-ze Käl-te Wet-ter-hahn Wäl-der
+Wald-weg Wald-rand Wald-bo-den Wald-tie-re Wald-blu-me Wald-blu-men Wur-zel Wur-zeln Baum-stamm Baum-stäm-me
+Baum-kro-ne Baum-kro-nen Baum-rin-de Tan-ne Tan-nen Fich-te Fich-ten Bu-che Bu-chen Ei-che
+Ei-chen Bir-ke Bir-ken Wei-de Wei-den Lin-de Lin-den A-horn Kas-ta-nie Zap-fen
+Ei-chel Ei-cheln Buch-e-cker Grä-ser Ge-trei-de Wei-zen Rog-gen Ha-fer Gers-te Mais-feld
+Mais-kol-ben Lö-wen-zahn Nar-zis-se Kro-kus Tul-pen Ro-sen Li-lie Li-lien Nel-ke Nel-ken
+Veil-chen La-ven-del Klee-blatt Klee-blät-ter Moo-se Pil-ze Flie-gen-pilz Früch-te Sa-men Knos-pe
+Knos-pen Stän-gel Stie-le Blu-men-topf Blu-men-beet Ge-mü-se Gieß-kan-ne Gar-ten-tor Gar-ten-zaun Gar-ten-haus
+Gar-ten-bank Gar-ten-weg Gar-ten-zwerg Schau-fel Spa-ten Har-ke Re-chen He-cke He-cken Sträu-cher
+Bee-te Ra-sen Wie-sen Fel-der Hü-gel Tä-ler Höh-le Höh-len Fel-sen Fels-wand
+Gip-fel Ge-bir-ge Vul-kan Vul-ka-ne Erd-be-ben Erd-ku-gel Welt-kar-te Län-der Küs-te Küs-ten
+Strän-de Sand-burg Sand-bur-gen Sand-kas-ten Sand-korn Sand-kör-ner Kie-sel Kie-sel-stein Bach-bett Flüs-se
+See-u-fer Tei-che Quel-le Quel-len Was-ser-fall Pfüt-ze Pfüt-zen Meer-was-ser Mee-re O-ze-an
+Ko-ral-le Ko-ral-len Mu-scheln Al-gen In-seln Hai-fisch Hai-fi-sche Wal-fisch Wal-fi-sche Del-fi-ne
+Fi-sche Gold-fisch Gold-fi-sche See-hund See-hun-de Rob-be Rob-ben See-lö-we See-lö-wen See-stern
+See-ster-ne Tin-ten-fisch Qual-le Qual-len Krab-be Krab-ben Krebs-tie-re Fo-rel-le Fo-rel-len He-ring
+He-rin-ge Fi-scher Fi-sche-rin An-gel Fi-scher-boot Haus-tier Haus-tie-re Hun-de-korb Wel-pe Wel-pen
+Kat-zen Kat-zen-korb Kätz-chen Pfo-te Pfo-ten Schnurr-haar Schnurr-haa-re Hams-ter Hams-ter-rad Meer-schwein-chen
+Ka-nin-chen Stall-tür Stäl-le Kä-fi-ge Ka-ri-bu Ga-zel-le Nas-horn Nas-hör-ner Nil-pferd Nil-pfer-de
+Fla-min-go Fla-min-gos Strau-ße Gei-er Ad-ler Fal-ke Fal-ken Specht-höh-le Rot-kehl-chen Am-sel
+Am-seln Mei-se Mei-sen Ler-che Ler-chen Schwal-be Schwal-ben Spat-zen Els-ter Els-tern
+Krä-he Krä-hen Ra-be Ra-ben Ei-er Vo-gel-nest Vo-gel-haus Fe-dern Tau-ben En-ten
+En-ten-teich Er-pel Gän-se Pu-ten Trut-hahn Trut-häh-ne Häh-ne Hüh-ner-stall Hüh-ner-ei Pfer-de-stall
+Pfer-de-huf Po-ny Po-nys E-sel-stall Foh-len Schwei-ne-stall Fer-kel Käl-ber Rin-der Büf-fel
+Bi-son Bi-sons Zie-gen Läm-mer Schafs-wol-le Schaf-fell Schafs-kä-se Kuh-glo-cke Kuh-milch Re-he
+Hir-sche Wild-schwein Wild-schwei-ne Eich-hörn-chen Mur-mel-tier Dach-se Mar-der Rat-ten Maul-wurf Maul-wür-fe
+Fle-der-maus Wasch-bär Wasch-bä-ren Ot-ter Bi-ber Bi-ber-bau Braun-bär Braun-bä-ren Wolfs-ru-del Wöl-fe
+Fuchs-bau Füch-sin Ha-sen I-gel-bau Sta-chel Sta-cheln Ko-a-las Äff-chen Go-ril-la Go-ril-las
+Schim-pan-se Schim-pan-sen Le-o-pard Pan-ther Ge-pard Ge-par-den Lö-wen Ti-ger-fell Rüs-sel Stoß-zäh-ne
+Ka-me-le Dro-me-dar La-mas Al-pa-ka Al-pa-kas Kän-gu-ru Kän-gu-rus Di-no Di-nos Dra-chen
+Dra-chen-ei Dra-chen-schwanz Ei-dech-se Ei-dech-sen Schild-krö-te Schild-krö-ten Frö-sche Krö-te Krö-ten Frösch-lein
+Frosch-kö-nig Laub-frosch Laub-frö-sche Blind-schlei-che Blind-schlei-chen Gras-hüp-fer Heu-schre-cke Heu-schre-cken Gril-le gril-len
+Bie-nen Hum-mel Hum-meln Wes-pe Wes-pen Hor-nis-se Hor-nis-sen Li-bel-le Li-bel-len Schmet-ter-ling
+Mai-kä-fer Mist-kä-fer Hirsch-kä-fer Glüh-würm-chen Lar-ve Lar-ven Spin-nen Spin-nen-netz Spin-nen-bein Schne-cken
+Schne-cken-haus Re-gen-wurm A-mei-sen Floh-markt Flö-he Läu-se Mil-be Mil-ben Ze-cke Ze-cken
+Rau-pen Mü-cken flie-gen Flie-gen-bein Früh-stück A-bend-brot Mahl-zeit Mahl-zei-ten Sup-pe Sup-pen
+Löf-fel-stiel Sup-pen-topf Topf-de-ckel Töp-fe Pfan-ne Pfan-nen Koch-topf Koch-löf-fel Koch-buch Sieb-löf-fel
+Mess-be-cher Back-blech Back-o-fen Back-form Back-pa-pier Kü-chen-tuch Kü-chen-uhr Kü-chen-tisch Schnei-de-brett Frucht-saft
+Frucht-säf-te Ap-fel-saft Ap-fel-mus Ap-fel-kern Ap-fel-baum Bir-nen-baum Bir-nen-saft Kirsch-baum Kirsch-bäu-me Kirsch-ker-ne
+Pflau-men-baum Pflau-men-kern Zwetsch-ge Zwetsch-gen Pfir-sich Pfir-si-che o-ran-ge O-ran-gen Ki-wi Ki-wis
+Man-go Man-gos Fei-ge Fei-gen Dat-tel Dat-teln Ro-si-ne Ro-si-nen Nüs-se Ha-sel-nuss
+Wal-nuss Wal-nüs-se Man-del Man-deln Ko-kos-nuss Obst-sa-lat Obst-ku-chen Obst-korb Obst-bäu-me Obst-gar-ten
+Obst-scha-le Obst-scha-len Ba-na-nen Me-lo-nen Zi-tro-nen Him-beer-saft Erd-beer-saft Erd-beer-eis Him-beer-eis Blau-bee-re
+Blau-bee-ren Brom-bee-re Brom-bee-ren Kir-schen Erd-bee-ren Him-bee-ren Jo-ghurt Jo-ghurts Kar-tof-feln Ka-rot-ten
+Gur-ken To-ma-ten Kür-bis-se Zwie-beln Erb-se Erb-sen Boh-ne Boh-nen Lin-se Lin-sen
+Spi-nat Brok-ko-li Blu-men-kohl Weiß-kohl Rot-kohl Kohl-ra-bi Ra-dies-chen Ret-tich Pa-pri-ka Sel-le-rie
+Lauch-stan-ge Lauch-stan-gen Fen-chel Knob-lauch Nu-deln Spa-ghet-ti La-sa-gne Ri-sot-to Piz-za Piz-zen
+Brat-wurst Brat-würs-te Würst-chen Le-ber-wurst Kä-se-brot But-ter-brot But-ter-keks Ho-nig-brot Wurst-brot Sa-la-mis
+Le-ber Ei-gelb Ei-weiß Spie-gel-ei Rühr-ei Pfann-ku-chen Scho-ko Scho-ko-eis Va-nil-le Ka-ka-o
+Milch-reis Milch-kan-ne Milch-fla-sche Milch-zahn Sah-ne Quark-spei-se Quark-bäll-chen Schlag-sah-ne Zimt-stern Zimt-ster-ne
+Eis-ku-gel Eis-ku-geln Eis-be-cher Eis-waf-fel Eis-waf-feln Eis-stiel Leb-ku-chen Bre-zel Bre-zeln Crois-sant
+Crois-sants Ba-guette Voll-korn-brot Schwarz-brot Weiß-brot Brot-krus-te Brot-schei-be Brot-schei-ben Brot-mes-ser Brot-korb
+Brot-do-se Brot-do-sen Ku-chen-form Ku-chen-stück Tor-ten-stück Waf-feln Keks-do-se Keks-do-sen Bon-bon Bon-bons
+Gum-mi-bär Gum-mi-band Kau-gum-mi Pra-li-ne Pra-li-nen Lak-ritz Brau-se Li-mo Frucht-tee Kräu-ter-tee
+Tee-tas-se Tee-kan-ne Tee-beu-tel Tee-löf-fel Kaf-fee Was-ser-glas Trink-glas Trink-glä-ser Trink-fla-sche Ge-tränk
+Ge-trän-ke Ge-schmack Ge-ruch Ge-rü-che Ge-würz Ge-wür-ze Pfef-fer Salz-stan-ge Salz-stan-gen Es-sig
+Ö-le Man-tel-knopf Ja-cken-knopf Ho-sen-knopf Knöp-fe Reiß-ver-schluss Ho-sen-bein Rock-ta-sche Rö-cke Klei-dung
+Klei-der-schrank Pul-lo-ver Strick-ja-cke Woll-so-cken Woll-müt-ze Som-mer-kleid Schür-ze Schür-zen Stie-fel San-da-le
+San-da-len Pan-tof-fel Pan-tof-feln Haus-schu-he Turn-schuh Sport-schu-he Schnür-sen-kel Schuh-soh-le Schuh-soh-len Schuh-spit-ze
+Schuh-spit-zen Hand-schuh Hand-schu-he Scha-len Haar-band Haar-span-ge Haar-span-gen Haar-bürs-te Haar-bürs-ten Käm-me
+Hals-ket-te Arm-band Arm-bän-der Ohr-ring Ohr-rin-ge Schmuck-stück Ba-de-schuh Son-nen-bad Schwimm-flü-gel Schwimm-rei-fen
+Schwimm-bril-le Tau-cher Tau-che-rin Seil-sprin-gen Sprung-seil Hüpf-seil Hüpf-sei-le Hüpf-ball Hüpf-bäl-le Fuß-ball
+Fuß-bäl-le Fuß-ball-tor Fuß-ball-platz Hand-ball Hand-bäl-le Bas-ket-ball Ten-nis Tisch-ten-nis Ten-nis-ball Schlä-ger
+Sport-ler Sport-le-rin Sport-fest Wett-kampf Wett-kämp-fe Me-dail-le Po-kal Po-ka-le Lauf-bahn Lauf-bah-nen
+Lauf-schu-he Sport-ho-se Sport-hem-den Tri-kot Tri-kots Mann-schaft Mann-schaf-ten Schieds-rich-ter Turn-stan-ge Turn-stan-gen
+Reck-stan-ge Klet-ter-seil Klet-ter-wand Ba-lan-ce Spie-le Spiel-re-gel Spiel-re-geln Spiel-stei-ne Spiel-fi-gur Wür-fel
+Wür-fel-spiel Spiel-kar-te Spiel-kar-ten Kar-ten-spiel Me-mo-ry Do-mi-no Mi-ka-do Schach-brett Schach-fi-gur Pup-pen
+Pup-pen-haus Pup-pen-kleid Ted-dy Ted-dys Ted-dy-bär Ku-schel-tier Holz-bau-stein Bau-klöt-ze Mur-meln Mur-mel-bahn
+Spiel-zeug Spiel-zeu-ge Spiel-zeug-haus Spiel-zeug-boot Spiel-zeug-zug Sand-ei-mer Sand-schau-fel Sand-förm-chen Gieß-kan-nen Schau-kel-seil
+Wip-pe Wip-pen Rut-schen Ka-rus-sell Ka-rus-sells Schau-kel-pferd Fe-der-ball Flum-mi Flum-mis Luft-bal-lon
+Luft-bal-lons Krei-sel Jo-jo Knet-mas-se Kne-te Knet-fi-gur Pa-pier-schiff Pa-pier-hut Glit-zer Per-le
+Per-len Zau-ber-stab Zau-ber-spruch Zau-ber-hut Zau-ber-trank Zau-ber-buch Zau-be-rei Zau-be-rin He-xe He-xen
+He-xen-hut He-xen-haus Hein-zel-mann Rie-se Rie-sen Zwer-ge Fe-en El-fe El-fen El-fen-bein
+Ein-horn Ein-hör-ner Prin-zen Kö-nig Kö-ni-gin Kö-nigs-kind Kö-nigs-schloss Schloss-gar-ten Schloss-turm Rit-ter-burg
+Rit-ter-helm Rit-ter-schwert Rit-ter-schild Rit-ter-pferd Schatz-kis-te Schatz-tru-he Schatz-kar-te Schatz-su-che Pi-ra-ten Fa-bel
+Fa-beln Fa-bel-tier Ge-sich-ter Fan-ta-sie Ge-heim-nis Glücks-brin-ger Lach-ge-sicht Lu-pe Lu-pen Fern-glas
+Fern-glä-ser Trom-mel Trom-meln Trom-pe-te Trom-pe-ten Gi-tar-re Gi-tar-ren Gei-ge Gei-gen Kla-vier
+Kla-vie-re Flö-te Flö-ten Block-flö-te Block-flö-ten Har-fe Har-fen Pau-ke Pau-ken Mu-sik
+Mu-si-ker Lie-der Lie-der-buch Me-lo-die Rhyth-mus Tän-ze-rin Tän-zer Tanz-schu-he Tanz-stun-de Bal-lett
+Büh-ne Büh-nen Sän-ger Sän-ge-rin Kon-zert Kon-zer-te Or-ches-ter Zu-hö-rer Zu-schau-er Ein-la-dung
+Ein-tritt Fest-tag Fest-ta-ge Ker-ze Ker-zen Ker-zen-licht La-ter-ne La-ter-nen Feu-er-werk Kon-fet-ti
+Gir-lan-de Gir-lan-den Luft-schlan-ge Luft-schlan-gen Fa-sching Fa-schings-hut Fa-schings-fest Mas-ke Mas-ken Ver-klei-dung
+Ge-schenk-band Os-ter-ei Os-ter-nest Os-ter-korb Weih-nachts-mann Weih-nachts-frau Weih-nachts-baum Weih-nachts-stern Weih-nachts-lied Weih-nachts-fest
+Weih-nachts-zeit Weih-nachts-markt Christ-kind Christ-kin-der Christ-baum Christ-bäu-me Ad-vent Ad-vents-kranz Ad-vents-zeit Ni-ko-laus
+Neu-jahr Neu-jahrs-tag Ge-burt Ge-duld Ge-fühl Ge-füh-le Ge-dan-ke Ge-dan-ken Freu-de Freu-den
+lie-be Är-ger Sor-ge Sor-gen Hoff-nung Hoff-nun-gen Freund-schaft Freund-schaf-ten Ver-trau-en Mut-pro-be
+Mut-pro-ben Auf-re-gung Ü-ber-mut Sehn-sucht Sehn-süch-te Heim-weh Träu-me Schlaf-lied Schlaf-lie-der Schlaf-müt-ze
+Schlaf-an-zug Schlaf-sack Schlaf-sä-cke Fa-den Fä-den Na-del Na-deln Stof-fe Woll-knäu-el Woll-fa-den
+Woll-fä-den Stoff-tie-re Stoff-tier Stoff-res-te Schei-be Schei-ben Span-ge Span-gen schrau-ben Nä-gel
+Ham-mer Häm-mer Sä-ge Sä-gen Zan-ge Zan-gen Pin-sel-stiel Werk-zeug Werk-zeu-ge Werk-bank
+Werk-bän-ke Bas-tel-heft Bas-tel-buch Sche-ren Kle-be-stift Pa-pier-blatt Pa-pier-korb Kar-ton Kar-tons Fal-te
+Fal-ten Knick-fal-te Knick-fal-ten Kle-be Aus-schnitt Aus-schnit-te Brief-mar-ke Brief-mar-ken Brief-pa-pier Brief-um-schlag
+Post-kar-te Post-kar-ten Post-stem-pel Pa-ket Pa-ke-te Pa-ket-band Päck-chen Geld-beu-tel Spar-do-se Spar-do-sen
+Ta-schen-geld Mün-ze Mün-zen Schei-ne Eu-ro Eu-ros Cent-stück Cent-stü-cke ar-bei-ten at-men
+an-ge-ben ab-ge-ben ab-ho-len ab-le-gen ab-ma-len ab-schnei-den ab-wa-schen ab-trock-nen ab-zäh-len ab-zie-hen
+ab-wi-schen ach-ten an-fan-gen an-kom-men an-ru-fen an-se-hen an-zie-hen auf-he-ben auf-ma-chen auf-pas-sen
+auf-räu-men auf-ste-hen auf-wa-chen auf-zäh-len aus-ge-ben aus-ma-len aus-pa-cken aus-ru-hen aus-su-chen aus-zie-hen
+ba-cken bas-teln be-den-ken be-gin-nen be-hal-ten be-kom-men be-nut-zen be-stel-len be-su-chen be-zah-len
+bie-gen bie-ten bin-den bit-ten blei-ben blin-ken blit-zen blü-hen boh-ren bra-ten
+brau-chen bren-nen brin-gen brül-len bürs-ten dan-ken dau-ern den-ken drän-geln dre-hen
+drü-cken du-schen ein-ge-ben ein-kau-fen ein-la-den ein-pa-cken ein-schla-fen ein-stei-gen ein-tra-gen emp-feh-len
+ent-de-cken ent-fer-nen ent-schei-den er-fin-den er-ken-nen er-klä-ren er-le-ben er-zäh-len es-sen fah-ren
+fal-len fan-gen fe-gen fei-ern fin-den flie-ßen flüs-tern fol-gen freu-en frie-ren
+füh-len fül-len ge-ben ge-fal-len ge-hen ge-lin-gen ge-nie-ßen ge-win-nen gie-ßen glau-ben
+glei-ten glän-zen glü-hen gra-ben grei-fen grü-ßen gu-cken ha-ben hal-ten han-deln
+hän-gen hei-ßen he-ben hei-len hei-zen ho-len hop-sen hüp-fen ja-gen jam-mern
+ju-beln kämp-fen kau-en keh-ren ken-nen klet-tern kle-ben kne-ten knüp-fen ko-chen
+kom-men kön-nen krat-zen krie-chen küs-sen lä-cheln lau-fen lau-schen le-ben le-gen
+len-ken leuch-ten lie-ben lie-gen lo-ben lö-sen lüf-ten ma-chen mes-sen mö-gen
+müs-sen na-schen nä-hen nen-nen nie-sen nüt-zen öff-nen ord-nen pa-cken pfei-fen
+pflan-zen pfle-gen pla-nen plät-schern pras-seln pro-bie-ren prü-fen put-zen quat-schen ra-ten
+ras-ten re-den rei-ben rei-chen rei-sen rei-ßen ret-ten rie-chen rol-len rüh-ren
+sam-meln sau-gen schau-en schau-keln schei-nen schen-ken schi-cken schie-ben schie-ßen schimp-fen
+schla-fen schla-gen schlei-chen schlie-ßen schme-cken schmel-zen schmü-cken schnei-den schnip-sen schrei-en
+schwim-men schwit-zen se-geln set-zen sit-zen sol-len spa-ren spie-geln spit-zen spre-chen
+sprin-gen spü-len stamp-fen star-ten stau-nen ste-cken ste-hen stel-len stei-gen stre-cken
+strei-cheln strei-ten stri-cken tas-ten tes-ten träu-men tref-fen tren-nen tre-ten trin-ken
+trock-nen ü-ben um-ar-men um-dre-hen um-zie-hen ver-ges-sen ver-glei-chen ver-kau-fen ver-lie-ren ver-pa-cken
+ver-ra-ten ver-ste-cken ver-ste-hen ver-su-chen ver-tei-len ver-wan-deln wa-chen wach-sen wan-dern war-ten
+wa-schen we-cken we-hen wei-nen wer-den wer-fen wis-sen wi-schen woh-nen wol-len
+wün-schen wür-feln zäh-len zau-bern zeich-nen zei-gen zie-hen zu-ge-ben zu-hö-ren zu-ma-chen
+zu-schau-en alt-mo-disch an-ders auf-merk-sam aus-ge-ruht är-ger-lich ängst-lich be-quem be-reit be-rühmt
+be-son-ders bil-lig bit-ter bö-se bräun-lich bunt-ge-mischt deut-lich di-cke dün-ne dun-kel
+e-ckig eif-rig ei-gen ein-fach ein-sam ein-zig e-le-gant e-norm en-ger er-folg-reich
+er-staunt ers-te er-wach-sen fan-tas-tisch far-big fau-ler fei-ne fer-tig feuch-te flei-ßig
+flin-ker flüs-sig freund-lich fried-lich fröh-lich frü-he ge-fähr-lich ge-lieb-te ge-mein ge-nau
+ge-nug ge-sund ge-tupft ge-tupf-te ge-streift ge-streif-te ge-wal-tig glän-zend glat-te glück-lich
+gol-den grau-e grif-fig gründ-lich gu-te hal-be har-te hei-ße hel-le herr-lich
+heu-te hilfs-be-reit hilf-los him-mel-blau hin-ten ho-he höf-lich hung-rig hüb-sche im-mer
+in-nen ir-gend-wo ka-riert ka-rier-te ka-putt kei-ne klei-ner klei-nes kleins-te klu-ge
+ko-misch kräf-tig kur-ze lan-ge lang-sam lang-wei-lig lau-ter le-cker leb-haft letz-te
+lie-ber lin-ke lo-cker lus-tig mü-de mu-tig na-he nas-se neu-e nied-lich
+nor-mal nütz-lich o-ben of-fen oft-mals or-dent-lich pas-send pein-lich pfle-ge-leicht plötz-lich
+pünkt-lich rech-te rei-fe reich-lich rie-sig ro-sa ros-tig run-de ru-hig sau-ber
+sau-re sau-er schar-fe schie-fe schlau-e schlech-te schö-ne schma-le schmut-zig schnei-dig
+schnel-le schüch-tern schwa-che schwar-ze schwe-re se-hens-wert sel-ten selb-stän-dig si-cher sil-bern
+son-nig spä-te span-nend spit-ze star-ke stän-dig stil-le stol-ze strei-fig stren-ge
+sü-ße tap-fer teu-er tie-fe tol-le trag-bar trau-rig treu-e tro-cken un-ten
+un-ter-wegs un-ge-fähr un-ge-recht un-ru-hig un-ter-schied ver-gess-lich ver-liebt ver-lebt ver-rückt ver-schie-den
+vor-ne vor-sich-tig wach-sam war-me wei-che wei-ter wei-ße wich-tig wie-der wil-de
+win-zig wis-sens-wert wun-der-bar wü-tend zar-te ziem-lich zu-frie-den zu-letzt zu-sam-men zwei-te
+zwi-schen zwölf-te
+`;
+const VOWELS = ['a','e','i','o','u','ä','ö','ü'];
+const CONSONANTS = [...'bcdfghjklmnpqrstvwxyz','ß'];
+const CONNECTIONS = ['sch','ch','ck','ei','au','eu','äu','ie','ai','qu','pf','st','sp'];
+const ALL_SOUNDS = [...VOWELS,...CONSONANTS,...CONNECTIONS];
+const FIRST_SOUNDS = [...'aeioumnlstrp'];
+
+// Verbindungen werden innerhalb einer Silbe erkannt, st/sp nur am Silbenanfang.
+// So braucht Kis-te die Buchstaben s und t, Stein hingegen die Verbindung st.
+function soundsFor(syllables) {
+ const sounds = [];
+ for (const syllable of syllables) {
+  const lower = syllable.toLocaleLowerCase('de');
+  for (let i=0; i<lower.length;) {
+   const connection = CONNECTIONS.find(sound => lower.startsWith(sound,i) && (!['st','sp'].includes(sound) || i===0));
+   const sound = connection || lower[i];
+   sounds.push(sound); i += sound.length;
+  }
+ }
+ return [...new Set(sounds)];
+}
+const WORDS = WORD_SOURCE.trim().split(/\s+/).map(source => {
+ const syllables=source.split('-');
+ return {word:syllables.join(''),syllables,sounds:soundsFor(syllables)};
+}).filter(entry => entry.syllables.length===2 || entry.syllables.length===3);
+// Tätigkeits- und Eigenschaftswörter werden im Spiel kleingeschrieben.
+const LOWER_WORDS = new Set('rechnen lesen malen lernen schreiben singen spielen lachen rennen tanzen turnen baden suchen hören sehen sagen fragen tragen rufen bauen kaufen helfen teilen leise laute rote grüne blaue gelbe bunte kleine große'.split(' '));
+for (const entry of WORDS) if (LOWER_WORDS.has(entry.word.toLocaleLowerCase('de'))) {
+ entry.word=entry.word.toLocaleLowerCase('de'); entry.syllables[0]=entry.syllables[0].toLocaleLowerCase('de');
+}
+const STAR='★';
+const JACKPOT_CHANCE=.06;
+const JACKPOT_LIMIT=10;
+// Die Silben behalten ihre Lesereihenfolge, egal wo die freie Walze steht.
+function symbolsFor(entry,starPosition=randomIndex(3)){
+ const symbols=[...entry.syllables];
+ if(symbols.length===2)symbols.splice(starPosition,0,STAR);
+ return symbols;
+}
+function isJackpot(round,enabled,randomValue=Math.random()){
+ return enabled && (round>=JACKPOT_LIMIT || randomValue<JACKPOT_CHANCE);
+}
+const MATH_RANGES=[
+ {id:'zehner',label:'Zehner',min:0,max:10},
+ {id:'hunderter',label:'Hunderter',min:10,max:100},
+ {id:'tausender',label:'Tausender',min:100,max:1000},
+ {id:'millionen',label:'Millionen',min:1000,max:1000000}
+];
+const MATH_OPERATIONS=[{id:'plus',label:'Plus',symbol:'+'},{id:'minus',label:'Minus',symbol:'−'},{id:'mal',label:'Mal',symbol:'×'}];
+// Nur Bereichspaare verwenden, die mindestens eine Aufgabe unter der Obergrenze erlauben.
+function mathTaskOptions(rangeIds,operationIds,allowOverflow=false){
+ const ranges=MATH_RANGES.filter(range=>rangeIds.has(range.id));
+ const limit=ranges.length?Math.max(...ranges.map(range=>range.max)):0;
+ const pairs=ranges.flatMap(left=>ranges.map(right=>({left,right})));
+ const operations=MATH_OPERATIONS.filter(operation=>operationIds.has(operation.id)).map(operation=>({
+  ...operation,pairs:pairs.filter(({left,right})=>allowOverflow || (operation.id==='plus'?left.min+right.min<=limit:operation.id==='mal'?left.min*right.min<=limit:true))
+ })).filter(operation=>operation.pairs.length);
+ return {limit,operations};
+}
+// Erst gültige Grenzen bestimmen, dann daraus ziehen. Auch seltene Aufgaben brauchen keine Suchschleife.
+function createMathTask(rangeIds,operationIds,allowOverflow=false,random=Math.random){
+ const {limit,operations}=mathTaskOptions(rangeIds,operationIds,allowOverflow);
+ if(!operations.length)return null;
+ const cap=allowOverflow?Infinity:limit;
+ const pick=items=>items[Math.floor(random()*items.length)];
+ const number=(min,max)=>min+Math.floor(random()*(max-min+1));
+ const operation=pick(operations);
+ const pair=pick(operation.pairs);
+ const leftMax=operation.id==='plus'?Math.min(pair.left.max,cap-pair.right.min):operation.id==='mal' && pair.right.min>0?Math.min(pair.left.max,Math.floor(cap/pair.right.min)):pair.left.max;
+ let left=number(pair.left.min,leftMax);
+ const rightMax=operation.id==='plus'?Math.min(pair.right.max,cap-left):operation.id==='mal' && left>0?Math.min(pair.right.max,Math.floor(cap/left)):pair.right.max;
+ let right=number(pair.right.min,rightMax);
+ if(operation.id==='minus' && left<right)[left,right]=[right,left];
+ const result=operation.id==='plus'?left+right:operation.id==='minus'?left-right:left*right;
+ return {left,right,operation:operation.id,result,symbols:[String(left),operation.symbol,String(right)]};
+}
+const byId=id=>document.getElementById(id);
+const ui={machine:byId('machine'),reels:byId('reels'),spin:byId('spin'),spinLabel:byId('spin-label'),announcement:byId('announcement'),settings:byId('settings'),open:byId('settings-open')};
+let selected=new Set(ALL_SOUNDS);
+let length='all';
+let draftLength=length;
+let current=null;
+let spinning=false;
+let bag=[];
+let displayed=[STAR,STAR,STAR];
+let jackpotEnabled=true;
+let roundsSinceJackpot=0;
+let partyTimer=null;
+let subject='deutsch';
+let mathRanges=new Set(['zehner']);
+let mathOperations=new Set(MATH_OPERATIONS.map(operation=>operation.id));
+let mathAllowOverflow=false;
+let mathJackpotEnabled=true;
+let mathRoundsSinceJackpot=0;
+let mathTask=null;
+const subjectTabs=[...document.querySelectorAll('[data-subject]')];
+const rangeChoices=[],operationChoices=[];
+const lengthButtons=[...document.querySelectorAll('[data-length]')];
+const choices=[];
+function eligible(sounds=selected,mode=length) {
+ return WORDS.filter(entry => (mode==='all' || entry.syllables.length===Number(mode)) && entry.sounds.every(sound=>sounds.has(sound)));
+}
+function randomIndex(n){return Math.floor(Math.random()*n)}
+// Ein gemischter Vorrat verhindert Wiederholungen, bevor alle Wörter dran waren.
+function refill(pool){
+ bag=[...pool];
+ for(let i=bag.length-1;i>0;i--){const j=randomIndex(i+1);[bag[i],bag[j]]=[bag[j],bag[i]]}
+ if(bag.length>1 && bag.at(-1).word===current?.word){[bag[0],bag[bag.length-1]]=[bag.at(-1),bag[0]]}
+}
+function nextWord(pool){if(!bag.length)refill(pool);return bag.pop()}
+function cell(symbol){
+ const node=document.createElement('div');node.className='cell'+(symbol===STAR?' is-star':/^\d+$/.test(symbol)?' is-number digits-'+symbol.length:symbol.length>6?' extra-long':symbol.length>4?' long':'');node.textContent=symbol;return node;
+}
+const reels=Array.from({length:3},()=>{const reel=document.createElement('div');reel.className='reel';const strip=document.createElement('div');strip.className='strip';reel.append(strip);ui.reels.append(reel);return {reel,strip}});
+function render(symbols){displayed=[...symbols];reels.forEach(({strip},index)=>strip.replaceChildren(cell(symbols[index])))}
+function stopParty(){clearTimeout(partyTimer);byId('party').hidden=true;byId('party').replaceChildren();ui.machine.classList.remove('jackpot')}
+function celebrate(){
+ stopParty();ui.machine.classList.add('jackpot');
+ if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const party=byId('party');party.hidden=false;
+  const colors=['#e84d46','#f3b523','#239c95','#9c79c4','#e689b7'];
+  for(let i=0;i<65;i++){
+   const piece=document.createElement('span');piece.className='confetti';
+   for(const [key,value] of Object.entries({x:Math.random()*100+'vw',color:colors[i%colors.length],delay:Math.random()*.4+'s',drift:(Math.random()-.5)*260+'px',turn:(Math.random()-.5)*1200+'deg'}))piece.style.setProperty('--'+key,value);
+   party.append(piece);
+  }
+ }
+ partyTimer=setTimeout(stopParty,3300);
+}
+function announce(){
+ if(subject==='mathe')ui.announcement.textContent=mathTask?'Rechne: '+mathTask.left+' '+MATH_OPERATIONS.find(operation=>operation.id===mathTask.operation).label+' '+mathTask.right+'. Das Ergebnis ist verdeckt.':'Drei Sterne! Hurra!';
+ else ui.announcement.textContent=current?'Lies von links nach rechts: '+displayed.map(symbol=>symbol===STAR?'Stern':symbol).join(', ')+'.'+(displayed.includes(STAR)?' Überspringe den Stern.':''):'Drei Sterne! Hurra!';
+}
+function resetResult(){
+ byId('math-reveal').hidden=subject!=='mathe' || !mathTask;
+ byId('math-reveal').disabled=spinning;
+ byId('math-reveal').setAttribute('aria-expanded','false');
+ byId('result-label').textContent='Ergebnis aufdecken';
+ byId('math-result').hidden=true;byId('math-result').textContent='';
+}
+function setInstructions(){
+ byId('instruction').textContent=subject==='mathe'?'Wie lautet das Ergebnis?':'Lies das Wort Silbe für Silbe.';
+ byId('subinstruction').textContent=subject==='mathe'?'Rechne zuerst, dann decke die Lösung auf.':displayed.includes(STAR)?'Überspringe den Stern beim Lesen.':'Drei Silben ergeben ein Wort.';
+}
+function refresh(){
+ stopParty();
+ byId('filter-summary').hidden=subject==='mathe';
+ if(subject==='mathe'){
+  mathTask=createMathTask(mathRanges,mathOperations,mathAllowOverflow);const empty=!mathTask;
+  byId('empty').hidden=!empty;ui.spin.disabled=empty;
+  render(mathTask?mathTask.symbols:['?','?','?']);resetResult();
+  if(empty){
+   byId('empty').textContent=mathRanges.size && mathOperations.size?'Für diese Auswahl gibt es keine Aufgabe innerhalb der Obergrenze. Wähle einen weiteren Zahlenbereich oder ein anderes Rechenzeichen.':'Wähle in den Einstellungen mindestens einen Zahlenbereich und ein Rechenzeichen.';
+   byId('instruction').textContent='Wähle deine Rechenaufgaben.';byId('subinstruction').textContent='Die Maschine wartet auf deine Auswahl.';ui.announcement.textContent=byId('empty').textContent;
+  }else{setInstructions();announce()}
+  return;
+ }
+ bag=[];const pool=eligible();
+ byId('filter-summary').textContent=selected.size===ALL_SOUNDS.length?'Alle Buchstaben und Lautverbindungen ausgewählt.':selected.size?'Bekannt: '+ALL_SOUNDS.filter(sound=>selected.has(sound)).join(' · '):'Noch keine Buchstaben ausgewählt.';
+ const empty=pool.length===0;byId('empty').hidden=!empty;ui.spin.disabled=empty;
+ if(empty){
+  current=null;render(['?','?','?']);byId('empty').textContent='Für diese Auswahl gibt es noch kein Wort im Wortschatz. Wähle weitere Buchstaben oder eine andere Silbenanzahl.';
+  byId('instruction').textContent='Erweitere die Auswahl.';byId('subinstruction').textContent='Die Maschine wartet auf passende Wörter.';ui.announcement.textContent=byId('empty').textContent;
+ }else{
+  const preferred=pool.find(entry=>entry.word==='Mama');current=preferred||nextWord(pool);if(preferred){refill(pool);bag=bag.filter(entry=>entry!==preferred)}
+  render(symbolsFor(current));setInstructions();announce();
+ }
+ resetResult();
+}
+function setBusy(busy){spinning=busy;ui.machine.classList.toggle('spinning',busy);ui.spin.disabled=busy;ui.open.disabled=busy;subjectTabs.forEach(tab=>tab.disabled=busy);byId('math-reveal').disabled=busy;ui.spinLabel.textContent=busy?'DREHT …':'START'}
+async function spin(){
+ if(spinning)return;const math=subject==='mathe';const pool=math?[]:eligible();
+ const mathOptions=math?mathTaskOptions(mathRanges,mathOperations,mathAllowOverflow):null;
+ if(math?!mathOptions.operations.length:!pool.length)return;
+ stopParty();if(math)mathRoundsSinceJackpot++;else roundsSinceJackpot++;
+ const jackpot=math?isJackpot(mathRoundsSinceJackpot,mathJackpotEnabled):isJackpot(roundsSinceJackpot,jackpotEnabled);
+ const target=jackpot?null:math?createMathTask(mathRanges,mathOperations,mathAllowOverflow):nextWord(pool);
+ const symbols=target?(math?target.symbols:symbolsFor(target)):[STAR,STAR,STAR];
+ setBusy(true);resetResult();ui.announcement.textContent='';byId('instruction').textContent='Die Walzen drehen sich …';byId('subinstruction').textContent=math?'Gleich kommt deine nächste Aufgabe.':'Gleich kannst du das Wort lesen.';
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const syllablePool=math?[]:[...new Set(pool.flatMap(entry=>entry.syllables)),STAR];
+ const mathNumberPool=math?Array.from({length:45},()=>createMathTask(mathRanges,mathOperations,mathAllowOverflow).symbols[0]):[];
+ const animationPools=math?[mathNumberPool,mathOptions.operations.map(operation=>operation.symbol),mathNumberPool]:[syllablePool,syllablePool,syllablePool];
+ // Lange Streifen rollen flüssig durch jede Walze und bremsen zeitversetzt ab.
+ await Promise.all(reels.map(async({reel,strip},index)=>{
+  const steps=reduced?0:22+index*7;
+  const animationPool=animationPools[index];
+  const cells=[cell(displayed[index]),...Array.from({length:steps},(_,step)=>cell(math && step%7===3?STAR:animationPool[randomIndex(animationPool.length)])),cell(symbols[index])];
+  strip.replaceChildren(...cells);reel.classList.add('rolling');
+  const animation=strip.animate([{transform:'translateY(0)'},{transform:'translateY(calc(-100% + var(--cell-h)))'}],{duration:reduced?80:1450+index*480,easing:'cubic-bezier(.16,.58,.18,1)',fill:'forwards'});
+  await animation.finished;
+  strip.replaceChildren(cell(symbols[index]));animation.cancel();reel.classList.remove('rolling');
+ }));
+ if(math)mathTask=target;else current=target;displayed=symbols;setBusy(false);resetResult();
+ if(jackpot){
+  if(math)mathRoundsSinceJackpot=0;else roundsSinceJackpot=0;byId('instruction').textContent='Drei Sterne! Hurra!';byId('subinstruction').textContent='Drücke START für die nächste Runde.';celebrate();
+ }else{
+  setInstructions();
+ }
+ announce();
+}
+ui.spin.addEventListener('click',spin);
+function switchSubject(next){
+ if(spinning || subject===next)return;
+ subject=next;
+ subjectTabs.forEach(tab=>{const active=tab.dataset.subject===subject;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1});
+ const math=subject==='mathe';
+ byId('game').setAttribute('aria-labelledby','tab-'+subject);
+ byId('brand-name').textContent=math?'Mathe-Bandit':'Silben-Bandit';
+ byId('eyebrow').textContent=math?'Drehen. Rechnen. Lösung entdecken.':'Drehen. Silben lesen. Wörter entdecken.';
+ byId('game-title').textContent=math?'Welche Aufgabe kommt als Nächstes?':'Welches Wort kommt als Nächstes?';
+ ui.machine.setAttribute('aria-label',math?'Rechenmaschine':'Silbenmaschine');
+ byId('about-title').textContent=math?'Wie werden die Aufgaben ausgewählt?':'Wie werden die Wörter ausgewählt?';
+ byId('about-deutsch').hidden=math;byId('about-mathe').hidden=!math;
+ byId('bank-note').textContent=math?'Rechenaufgaben mit ganzen Zahlen':WORDS.length+' Wörter mit hinterlegten Silben';
+ refresh();
+}
+for(const tab of subjectTabs){
+ tab.addEventListener('click',()=>switchSubject(tab.dataset.subject));
+ tab.addEventListener('keydown',event=>{
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  event.preventDefault();const next=event.key==='Home'?subjectTabs[0]:event.key==='End'?subjectTabs.at(-1):subjectTabs.find(item=>item!==tab);
+  switchSubject(next.dataset.subject);next.focus();
+ });
+}
+byId('math-reveal').addEventListener('click',()=>{
+ if(spinning || !mathTask)return;
+ const reveal=byId('math-reveal').getAttribute('aria-expanded')!=='true';
+ byId('math-reveal').setAttribute('aria-expanded',String(reveal));
+ byId('result-label').textContent=reveal?'Ergebnis · zum Verdecken tippen':'Ergebnis aufdecken';
+ byId('math-result').textContent=reveal?'= '+mathTask.result:'';
+ byId('math-result').hidden=!reveal;
+ if(reveal)ui.announcement.textContent='Das Ergebnis ist '+mathTask.result+'.';else announce();
+});
+function syncLengthButtons(){lengthButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.length===draftLength)))}
+for(const button of lengthButtons)button.addEventListener('click',()=>{draftLength=button.dataset.length;syncLengthButtons();preview()});
+for(const [container,sounds] of [['vowels',VOWELS],['consonants',CONSONANTS],['connections',CONNECTIONS]]){
+ for(const sound of sounds){
+  const label=document.createElement('label');label.className='choice';const input=document.createElement('input');input.type='checkbox';input.name='sound';input.value=sound;input.setAttribute('aria-label',sound);const span=document.createElement('span');span.textContent=sound;label.append(input,span);byId(container).append(label);choices.push(input);input.addEventListener('change',preview);
+ }
+}
+function draft(){return new Set(choices.filter(input=>input.checked).map(input=>input.value))}
+function mathDraft(inputs){return new Set(inputs.filter(input=>input.checked).map(input=>input.value))}
+function previewMath(){
+ const rangeIds=mathDraft(rangeChoices),operationIds=mathDraft(operationChoices);
+ const allowOverflow=byId('math-allow-overflow').checked;
+ const {limit,operations}=mathTaskOptions(rangeIds,operationIds,allowOverflow);
+ const unavailable=MATH_OPERATIONS.filter(operation=>operationIds.has(operation.id) && !operations.some(valid=>valid.id===operation.id));
+ byId('math-settings-error').hidden=true;
+ byId('math-preview').textContent=!rangeIds.size || !operationIds.size?'Wähle mindestens einen Zahlenbereich und ein Rechenzeichen.':!operations.length?'Keine passende Aufgabe innerhalb der Obergrenze. Wähle einen weiteren Bereich oder ein anderes Rechenzeichen.':(allowOverflow?'Ergebnisse dürfen größer als '+limit+' sein.':'Ergebnisse von 0 bis '+limit+'.')+(unavailable.length?' Für '+unavailable.map(operation=>operation.label).join(' und ')+' gibt es in dieser Auswahl keine passende Aufgabe.':'');
+}
+byId('math-allow-overflow').addEventListener('change',previewMath);
+for(const [container,items,inputs,name] of [['math-ranges',MATH_RANGES,rangeChoices,'range'],['math-operations',MATH_OPERATIONS,operationChoices,'operation']]){
+ for(const item of items){
+  const label=document.createElement('label');label.className='choice';
+  const input=document.createElement('input');input.type='checkbox';input.name=name;input.value=item.id;input.setAttribute('aria-label',item.label);
+  const span=document.createElement('span');span.textContent=item.label;
+  if(name==='range'){const detail=document.createElement('small');detail.textContent=item.min+'–'+item.max;span.append(detail)}
+  label.append(input,span);byId(container).append(label);inputs.push(input);input.addEventListener('change',previewMath);
+ }
+}
+function preview(){const pool=eligible(draft(),draftLength);byId('preview-count').textContent=pool.length?pool.length+(pool.length===1?' passendes Wort':' passende Wörter')+' für die gewählte Silbenanzahl.':'Keine passenden Wörter. Wähle weitere Laute oder eine andere Silbenanzahl.'}
+function selectPreset(sounds){choices.forEach(input=>input.checked=sounds.includes(input.value));preview()}
+ui.open.addEventListener('click',()=>{
+ if(spinning)return;const math=subject==='mathe';
+ byId('deutsch-settings').hidden=math;byId('mathe-settings').hidden=!math;
+ byId('settings-title').textContent='Einstellungen · '+(math?'Mathe':'Deutsch');
+ byId('settings-description').textContent=math?'Wähle die Zahlenbereiche und Rechenzeichen für deine Aufgaben. Mehrere können gleichzeitig aktiv sein.':'Wähle die Silbenanzahl und die bekannten Buchstaben und Lautverbindungen. Die Maschine zeigt nur passende Wörter.';
+ if(math){rangeChoices.forEach(input=>input.checked=mathRanges.has(input.value));operationChoices.forEach(input=>input.checked=mathOperations.has(input.value));byId('math-allow-overflow').checked=mathAllowOverflow;byId('math-jackpot-enabled').checked=mathJackpotEnabled;previewMath()}
+ else{draftLength=length;syncLengthButtons();choices.forEach(input=>input.checked=selected.has(input.value));byId('jackpot-enabled').checked=jackpotEnabled;preview()}
+ ui.settings.showModal();
+});
+for(const id of ['settings-close','cancel'])byId(id).addEventListener('click',()=>ui.settings.close());
+byId('preset-all').addEventListener('click',()=>selectPreset(ALL_SOUNDS));byId('preset-first').addEventListener('click',()=>selectPreset(FIRST_SOUNDS));byId('preset-none').addEventListener('click',()=>selectPreset([]));
+byId('settings-form').addEventListener('submit',event=>{
+ event.preventDefault();
+ if(subject==='mathe'){
+  const ranges=mathDraft(rangeChoices),operations=mathDraft(operationChoices),allowOverflow=byId('math-allow-overflow').checked;
+  const options=mathTaskOptions(ranges,operations,allowOverflow);
+  const unavailable=MATH_OPERATIONS.filter(operation=>operations.has(operation.id) && !options.operations.some(valid=>valid.id===operation.id));
+  if(!ranges.size || !operations.size || unavailable.length){
+   const error=byId('math-settings-error');
+   error.textContent=!ranges.size || !operations.size?'Wähle mindestens einen Zahlenbereich und ein Rechenzeichen.':unavailable.map(operation=>operation.label).join(' und ')+' ist mit diesen Bereichen innerhalb der Obergrenze '+options.limit+' nicht möglich. Ändere die Bereiche oder Rechenzeichen, oder erlaube Ergebnisse außerhalb des Zahlenbereichs.';
+   error.hidden=false;error.focus();return;
+  }
+  mathRanges=ranges;mathOperations=operations;mathAllowOverflow=allowOverflow;mathJackpotEnabled=byId('math-jackpot-enabled').checked;
+ }
+ else{selected=draft();length=draftLength;jackpotEnabled=byId('jackpot-enabled').checked}
+ refresh();ui.settings.close();
+});
+ui.settings.addEventListener('close',()=>ui.open.focus());
+byId('bank-note').textContent=WORDS.length+' Wörter mit hinterlegten Silben';
+refresh();
+</script>
+</body>
+</html>
