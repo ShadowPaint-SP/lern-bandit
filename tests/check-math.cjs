@@ -1,8 +1,7 @@
 const fs = require('node:fs');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
-const html = fs.readFileSync(require('node:path').join(__dirname, '..', 'index.html'), 'utf8');
-const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+const script = fs.readFileSync(require('node:path').join(__dirname, '..', 'assets', 'bandit.js'), 'utf8');
 new vm.Script(script);
 const context = vm.createContext({});
 vm.runInContext(script.slice(0, script.indexOf('const byId=')) + `

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Deutsch und Mathe mit dem einarmigen Banditen: echte Wörter lesen und Rechenaufgaben lösen. Funktioniert auch offline.">
+<title>Silben-Bandit · Lernbandit</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/bandit.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<script src="assets/bandit.js" defer></script>
+</head>
+<body data-page="bandit">
+<div class="page-shell">
+<header class="site-header" data-site-header>
+    <nav class="game-nav" data-game-nav aria-label="Spiele"></nav>
+  <button class="quiet-button" id="settings-open" type="button"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7"/><circle cx="7" cy="5" r="2" fill="var(--paper)" stroke="currentColor"/><circle cx="13" cy="10" r="2" fill="var(--paper)" stroke="currentColor"/><circle cx="7" cy="15" r="2" fill="var(--paper)" stroke="currentColor"/></svg> Einstellungen</button>
+</header>
+
+<main>
+ <div class="bandit-game" id="game" role="region" aria-labelledby="game-title">
+ <section class="intro"><h1 class="bandit-title" id="game-title">Der Silben-Bandit</h1><p class="eyebrow" id="eyebrow">Drehe die Walzen. Welches Wort entsteht?</p></section>
+ <div class="empty" id="empty" role="status" hidden></div>
+ <section class="machine" id="machine" aria-label="Silbenmaschine">
+  <div class="reels" id="reels" aria-hidden="true"></div>
+  <div class="machine-bottom"><div><p class="instruction" id="instruction">Lies das Wort Silbe für Silbe.</p><p class="subinstruction" id="subinstruction">Was steht auf den Walzen?</p></div><button class="spin-button" id="spin" type="button"><span id="spin-label">START</span></button></div>
+ </section>
+ <button class="math-result" id="math-reveal" type="button" aria-expanded="false" aria-controls="math-result" hidden><span class="result-label" id="result-label">Ergebnis aufdecken</span><strong id="math-result" hidden></strong></button>
+ <p class="filter-summary" id="filter-summary"></p>
+ <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+ </div>
+ <div class="bandit-notes"><footer class="bottom-note"><span id="bank-note"></span></footer>
+ <details><summary id="about-title">Wie werden die Wörter ausgewählt?</summary><div id="about-deutsch"><p>Die Maschine wählt ein vollständiges Wort mit hinterlegten Silben. Nach dem Drehen ergeben die Silben von links nach rechts ein echtes Wort. Bei zwei Silben steht ein Stern an einer zufälligen Stelle. Überspringe ihn beim Lesen. Drei Sterne sind ein Glückstreffer.</p><p>Es erscheinen nur Wörter mit den ausgewählten Buchstaben und Lautverbindungen. Gibt es keinen Treffer, wartet die Maschine auf eine neue Auswahl. Die Silben sind als Lesesilben hinterlegt, zum Beispiel Son-ne, Kat-ze und E-sel.</p></div><div id="about-mathe" hidden><p>Beide Zahlen werden aus den aktivierten Bereichen gewählt. Bei Minus steht die größere Zahl links, sodass das Ergebnis mindestens null ist. Die Zahlen auf den Walzen stammen aus den ausgewählten Bereichen. Das Ergebnis überschreitet die höchste ausgewählte Grenze nur, wenn du in den Einstellungen Ergebnisse außerhalb des Zahlenbereichs erlaubst. Tippe auf das Ergebnisfeld, um die Lösung aufzudecken oder wieder zu verdecken.</p><p>Wenn Drei-Sterne-Treffer aktiviert sind, erscheinen mit einer Chance von 6 % drei Sterne statt einer Aufgabe. Spätestens beim zehnten Dreh nach dem letzten Treffer kommen drei Sterne. Mit START geht es danach weiter.</p></div><p>Eigenständige Umsetzung, inspiriert vom <a href="https://grundschul.tools/deutsch/silben-bandit.html" target="_blank" rel="noopener noreferrer">Silben-Bandit auf grundschul.tools</a>. Schrift: Grundschrift von Christian Urff, unverändert eingebettet, <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0</a>.</p></details></div>
+</main>
+<footer class="site-footer"><span>Ohne Anmeldung. Auch offline nutzbar.</span><a href="index.html">Zur Startseite</a></footer>
+</div>
+<dialog id="settings" aria-labelledby="settings-title" aria-describedby="settings-description">
+ <form id="settings-form">
+  <div class="dialog-top"><h2 id="settings-title">Einstellungen</h2><button class="close" id="settings-close" type="button" aria-label="Einstellungen schließen">×</button></div>
+  <p class="description" id="settings-description">Wähle die Silbenanzahl und die bekannten Buchstaben und Lautverbindungen. Die Maschine zeigt nur passende Wörter.</p>
+  <div id="deutsch-settings">
+  <fieldset><legend>Silbenanzahl</legend><div class="segmented" role="group" aria-label="Silbenanzahl">
+   <button type="button" data-length="all" aria-pressed="true">Gemischt</button>
+   <button type="button" data-length="2" aria-pressed="false">2 Silben</button>
+   <button type="button" data-length="3" aria-pressed="false">3 Silben</button>
+  </div></fieldset>
+  <div class="presets"><button type="button" id="preset-all">Alles auswählen</button><button type="button" id="preset-first">Erste Wörter</button><button type="button" id="preset-none">Auswahl leeren</button></div>
+  <fieldset><legend>Vokale und Umlaute</legend><div class="choices" id="vowels"></div></fieldset>
+  <fieldset><legend>Konsonanten</legend><div class="choices" id="consonants"></div></fieldset>
+  <fieldset><legend>Lautverbindungen</legend><div class="choices" id="connections"></div></fieldset>
+  <div class="jackpot-setting"><label><input type="checkbox" id="jackpot-enabled" checked>Drei-Sterne-Treffer</label><p>Zufällig möglich und spätestens beim zehnten Dreh nach dem letzten Treffer.</p></div>
+  <div class="preview-count" id="preview-count" role="status" aria-live="polite" aria-atomic="true"></div>
+  </div>
+  <div id="mathe-settings" hidden>
+   <fieldset><legend>Zahlenbereiche</legend><div class="choices math-choices" id="math-ranges"></div></fieldset>
+   <fieldset><legend>Rechenzeichen</legend><div class="choices math-choices" id="math-operations"></div></fieldset>
+   <div class="jackpot-setting"><label><input type="checkbox" id="math-allow-overflow">Ergebnisse außerhalb des Zahlenbereichs erlauben</label></div>
+   <div class="jackpot-setting"><label><input type="checkbox" id="math-jackpot-enabled" checked>Drei-Sterne-Treffer</label><p>Zufällig möglich und spätestens beim zehnten Dreh nach dem letzten Treffer.</p></div>
+   <div class="preview-count" id="math-preview" role="status" aria-live="polite" aria-atomic="true"></div>
+   <p class="settings-error" id="math-settings-error" role="alert" tabindex="-1" hidden></p>
+  </div>
+  <div class="dialog-actions"><button class="cancel" id="cancel" type="button">Abbrechen</button><button class="apply" type="submit">Übernehmen</button></div>
+ </form>
+</dialog>
+<div class="party" id="party" aria-hidden="true" hidden></div>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f4eb" />
+    <meta name="description" content="Schütteln, zählen und Zahlen zerlegen. Eine interaktive Schüttelbox im Stil von Lernbandit, für die Grundschule und zu Hause." />
+    <title>Schüttelbox · Lernbandit</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="assets/schuettelbox.css">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
+<script src="assets/schuettelbox.js" defer></script>
+</head>
+  <body data-page="schuettelbox">
+    <div class="page-shell">
+      <header class="site-header" data-site-header>
+    <nav class="game-nav" data-game-nav aria-label="Spiele"></nav>
+  <button type="button" class="help-button" id="help-open"><span aria-hidden="true">?</span><span>So geht's</span></button>
+</header>
+
+
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <h1 id="page-title">Die Schüttelbox<span class="title-spark" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="m9 21 10 3m9-18-3 11m17 6-10 3m3 14-7-8" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span></h1>
+          <p>Einmal schütteln. Zwei Teile. Eine Zahl.</p>
+        </section>
+
+        <section class="workspace" aria-label="Zahlen mit der Schüttelbox zerlegen">
+          <div class="toolbar">
+            <div class="quantity-control"><label for="quantity">Kugeln</label><div class="stepper"><button type="button" id="decrease" aria-label="Eine Kugel weniger">−</button><input type="number" id="quantity" min="2" max="20" value="10" inputmode="numeric" autocomplete="off" /><button type="button" id="increase" aria-label="Eine Kugel mehr">+</button></div><div class="quantity-presets" role="group" aria-label="Kugelanzahl wählen"><button type="button" data-quantity="5" aria-pressed="false">5</button><button type="button" data-quantity="10" aria-pressed="true">10</button><button type="button" data-quantity="20" aria-pressed="false">20</button></div></div>
+            <div class="mode-switch" role="group" aria-label="Lernmodus"><button type="button" id="discover" aria-pressed="true">Entdecken</button><button type="button" id="practice" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4h14v12H3zM10 4v12" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 4h7v12h-7z" fill="currentColor"/></svg>Ergänzen</button></div>
+          </div>
+
+          <div class="box-stage">
+            <div class="box-topline"><span id="box-instruction">Wie teilen sich die Kugeln auf?</span></div>
+            <div class="shake-box" id="shake-box">
+              <div class="box-inner">
+                <div class="chamber-labels"><span>Ein Teil</span><span>Der andere Teil</span></div>
+                <canvas id="balls" width="800" height="300" aria-hidden="true"></canvas>
+                <button type="button" class="cover left-cover" id="cover-left" aria-expanded="true" aria-label="Linkes Fach verdecken"><span class="cover-panel" aria-hidden="true"><span class="cover-question">?</span></span><span class="cover-action"><svg class="eye-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg><span class="cover-label">Verdecken</span></span></button>
+                <button type="button" class="cover right-cover" id="cover-right" aria-expanded="true" aria-label="Rechtes Fach verdecken"><span class="cover-panel" aria-hidden="true"><span class="cover-question">?</span></span><span class="cover-action"><svg class="eye-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg><span class="cover-label">Verdecken</span></span></button>
+              </div>
+              <span class="box-screw screw-tl" aria-hidden="true"></span><span class="box-screw screw-tr" aria-hidden="true"></span><span class="box-screw screw-bl" aria-hidden="true"></span><span class="box-screw screw-br" aria-hidden="true"></span>
+              <div class="box-feet" aria-hidden="true"><span></span><span></span></div>
+            </div>
+          </div>
+
+          <div class="learning-area">
+            <div class="equation" aria-label="Zerlegung" id="equation"><span class="part-number left-number" id="left-number">4</span><span class="math-sign">+</span><span class="part-number right-number" id="right-number">6</span><span class="math-sign">=</span><span class="total-number" id="total-number">10</span></div>
+            <button type="button" class="shake-button" id="shake"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="6" y="6" width="16" height="16" rx="4" transform="rotate(-12 14 14)" stroke="currentColor" stroke-width="2"/><path d="m3 7-1 4m22 6 2-4M8 1l4 1M16 26l4-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="12" r="1.5" fill="currentColor"/><circle cx="17" cy="16" r="1.5" fill="currentColor"/></svg><span id="shake-label">Schütteln!</span></button>
+            <p class="keyboard-hint">oder drücke die <kbd>Leertaste</kbd></p>
+          </div>
+
+        </section>
+        <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+      </main>
+
+      <footer class="site-footer"><span>Ohne Anmeldung. Auch offline nutzbar.</span><a href="index.html">Zur Startseite <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M4 4h8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></footer>
+    </div>
+
+    <dialog id="help" aria-labelledby="help-title">
+      <div class="dialog-heading"><h2 id="help-title">So geht die Schüttelbox</h2><button type="button" class="dialog-close" id="help-close" aria-label="Anleitung schließen">×</button></div>
+      <p>Eine Zahl, aufgeteilt in zwei Fächer. Beim Schütteln verteilen sich die Kugeln neu. Zusammen bleiben es gleich viele.</p>
+      <ol><li><strong>Wähle eine Zahl.</strong> Mit 2 bis 20 Kugeln kannst du kleine und große Zahlen zerlegen.</li><li><strong>Schüttle die Box.</strong> Zähle die Kugeln auf beiden Seiten. Welche Plusaufgabe entsteht?</li><li><strong>Verdecke ein Fach.</strong> Wie viele Kugeln fehlen zur ganzen Zahl? Tippe auf „Aufdecken“, um nachzusehen.</li></ol>
+      <p>Im Modus „Ergänzen“ bleibt das rechte Fach nach jedem Schütteln verdeckt. Die Leertaste schüttelt, mit Tab erreichst du die anderen Knöpfe.</p>
+      <div class="font-credit">Schrift: Grundschrift von Christian Urff, unverändert übernommen. <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0</a>.</div>
+      <button type="button" id="help-done" class="dialog-done">Los geht's</button>
+    </dialog>
+
+  </body>
+</html>
