@@ -9,12 +9,74 @@
   const current = page === 'bandit'
     ? new URLSearchParams(location.search).get('fach') === 'mathe' ? 'mathe' : 'silben'
     : page;
-  const games = [
-    { id: 'silben', name: 'Silben-Bandit', href: 'bandit.html?fach=deutsch' },
-    { id: 'mathe', name: 'Mathe-Bandit', href: 'bandit.html?fach=mathe' },
-    { id: 'schuettelbox', name: 'Schüttelbox', href: 'schuettelbox.html' },
+  const navigation = document.querySelector('[data-game-nav]');
+  const subjects = [
+    { id: 'deutsch', name: 'Deutsch', tools: [
+      { id: 'silben', name: 'Silben-Bandit', href: 'bandit.html?fach=deutsch' },
+      { id: 'silbenfarben', name: 'Silbenfarben', href: 'silbenfarben.html' },
+    ] },
+    { id: 'mathe', name: 'Mathe', tools: [
+      { id: 'mathe', name: 'Mathe-Bandit', href: 'bandit.html?fach=mathe' },
+      { id: 'schuettelbox', name: 'Schüttelbox', href: 'schuettelbox.html' },
+    ] },
   ];
-  document.querySelector('[data-game-nav]').innerHTML = games.map(game =>
-    `<a href="${game.href}"${current === game.id ? ' aria-current="page"' : ''}>${game.name}</a>`
-  ).join('');
+  navigation.innerHTML = subjects.map(subject => `<div class="nav-group">
+    <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="nav-${subject.id}"${subject.tools.some(tool => tool.id === current) ? ' data-current="true"' : ''}>${subject.name}<svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="nav-submenu" id="nav-${subject.id}" hidden>${subject.tools.map(tool =>
+      `<a href="${tool.href}"${current === tool.id ? ' aria-current="page"' : ''}>${tool.name}</a>`
+    ).join('')}</div>
+  </div>`).join('');
+
+  const triggers = [...navigation.querySelectorAll('.nav-trigger')];
+  function closeMenus(returnFocus = false) {
+    const open = triggers.find(trigger => trigger.getAttribute('aria-expanded') === 'true');
+    for (const trigger of triggers) {
+      trigger.setAttribute('aria-expanded', 'false');
+      document.getElementById(trigger.getAttribute('aria-controls')).hidden = true;
+    }
+    if (returnFocus) open?.focus();
+  }
+  function openMenu(trigger) {
+    closeMenus();
+    trigger.setAttribute('aria-expanded', 'true');
+    document.getElementById(trigger.getAttribute('aria-controls')).hidden = false;
+  }
+  for (const trigger of triggers) {
+    trigger.addEventListener('click', () => {
+      if (trigger.getAttribute('aria-expanded') === 'true') closeMenus();
+      else openMenu(trigger);
+    });
+    trigger.addEventListener('keydown', event => {
+      if (!['ArrowDown', 'ArrowUp'].includes(event.key)) return;
+      event.preventDefault();
+      openMenu(trigger);
+      const links = document.getElementById(trigger.getAttribute('aria-controls')).querySelectorAll('a');
+      (event.key === 'ArrowDown' ? links[0] : links[links.length - 1]).focus();
+    });
+  }
+  navigation.querySelectorAll('.nav-submenu').forEach(submenu => {
+    submenu.addEventListener('keydown', event => {
+      if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+      const links = [...submenu.querySelectorAll('a')];
+      const index = links.indexOf(document.activeElement);
+      if (index === -1) return;
+      event.preventDefault();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? links.length - 1
+        : (index + (event.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length;
+      links[next].focus();
+    });
+  });
+  document.addEventListener('click', event => {
+    if (!navigation.contains(event.target)) closeMenus();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && triggers.some(trigger => trigger.getAttribute('aria-expanded') === 'true')) {
+      event.preventDefault();
+      closeMenus(true);
+    }
+  });
+  window.addEventListener('pageshow', () => closeMenus());
+  navigation.addEventListener('focusout', event => {
+    if (!navigation.contains(event.relatedTarget)) closeMenus();
+  });
 })();

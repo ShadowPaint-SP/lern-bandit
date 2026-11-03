@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4eb">
+  <meta name="description" content="Schreibe deinen eigenen Text und lies ihn Silbe für Silbe. Jede zweite Silbe wird farbig markiert, vollständig lokal und auch offline.">
+  <title>Silbenfarben · Lernbandit</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css?v=3">
+  <link rel="stylesheet" href="assets/silbenfarben.css?v=3">
+  <script src="assets/site.js?v=3" defer></script>
+  <script src="assets/words.js?v=3" defer></script>
+  <script src="assets/vendor/de-syllable.js?v=3" defer></script>
+  <script src="assets/syllables.js?v=3" defer></script>
+  <script src="assets/silbenfarben.js?v=3" defer></script>
+</head>
+<body data-page="silbenfarben">
+  <div class="page-shell">
+    <header class="site-header" data-site-header>
+      <nav class="game-nav" data-game-nav aria-label="Lernwerkzeuge"></nav>
+      <button type="button" class="editor-settings-button" id="settings-open"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7"/><circle cx="7" cy="5" r="2" fill="var(--paper)" stroke="currentColor"/><circle cx="13" cy="10" r="2" fill="var(--paper)" stroke="currentColor"/><circle cx="7" cy="15" r="2" fill="var(--paper)" stroke="currentColor"/></svg>Einstellungen</button>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <h1 id="page-title">Silbenfarben</h1>
+        <p>Schreibe deinen Text. Die Silben färben sich mit.</p>
+      </section>
+      <section class="writing-tool" aria-label="Silben markieren">
+        <div class="writing-frame">
+          <div class="writing-toolbar">
+            <label for="writing-input">Dein Text</label>
+            <div class="writing-actions"><button type="button" id="load-example">Beispieltext</button><button type="button" id="clear-text" disabled>Text leeren</button></div>
+          </div>
+          <div class="writing-window" id="writing-window">
+            <div class="writing-highlight" id="writing-highlight" aria-hidden="true"><div class="editor-surface" id="colored-text"></div></div>
+            <textarea class="editor-surface writing-input" id="writing-input" placeholder="Schreibe hier deinen Text …" spellcheck="false" autocapitalize="sentences" autocomplete="off" wrap="soft" aria-describedby="input-description"></textarea>
+          </div>
+        </div>
+        <p class="sr-only" id="input-description">Während du schreibst, wird nach jedem Buchstaben jede zweite Silbe farbig. Der Text bleibt unverändert.</p>
+        <p class="engine-warning" id="engine-warning" role="status" hidden>Die automatische Silbentrennung konnte nicht starten. Bekannte Wörter werden weiterhin markiert. Lade die Seite neu, um es erneut zu versuchen.</p>
+        <details class="syllable-about"><summary>Wie werden die Silben erkannt?</summary><p>Bekannte Wörter verwenden dieselben Lesesilben wie der Silben-Bandit. Weitere Wörter werden automatisch zerlegt. Dabei können Fehler entstehen, etwa bei Namen oder Fremdwörtern. Prüfe die Markierung, bevor du den Text zum Üben verwendest.</p><p>Dein Text bleibt auf deinem Gerät. Die Silbenmuster stammen aus <a href="https://github.com/mnater/Hyphenopoly" target="_blank" rel="noopener noreferrer">Hyphenopoly</a> von Mathias Nater, <a href="assets/vendor/HYPHENOPOLY-LICENSE.txt">MIT-Lizenz</a>.</p></details>
+        <p class="sr-only" id="editor-announcement" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+    <footer class="site-footer"><span>Ohne Anmeldung. Auch offline nutzbar.</span><a href="index.html">Zur Startseite</a></footer>
+  </div>
+  <dialog class="editor-settings" id="editor-settings" aria-labelledby="settings-title">
+    <form id="settings-form">
+      <div class="editor-dialog-heading"><h2 id="settings-title">Einstellungen</h2><button type="button" id="settings-close" aria-label="Einstellungen schließen">×</button></div>
+      <fieldset><legend>Schriftgröße</legend><div class="setting-options size-options"><label><input type="radio" name="size" value="24"><span>Klein</span></label><label><input type="radio" name="size" value="32" checked><span>Mittel</span></label><label><input type="radio" name="size" value="40"><span>Groß</span></label></div></fieldset>
+      <fieldset><legend>Markierungsfarbe</legend><div class="setting-options color-options"><label><input type="radio" name="color" value="teal"><span><i class="color-swatch swatch-teal" aria-hidden="true"></i>Petrol</span></label><label><input type="radio" name="color" value="red" checked><span><i class="color-swatch swatch-red" aria-hidden="true"></i>Rot</span></label><label><input type="radio" name="color" value="blue"><span><i class="color-swatch swatch-blue" aria-hidden="true"></i>Blau</span></label></div></fieldset>
+      <label class="bow-setting"><input type="checkbox" name="bows" id="show-bows">Silbenbögen anzeigen</label>
+      <div class="editor-dialog-actions"><button type="button" id="settings-cancel">Abbrechen</button><button type="submit">Übernehmen</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

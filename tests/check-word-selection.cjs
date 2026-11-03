@@ -1,7 +1,8 @@
 const fs = require('node:fs');
 const vm = require('node:vm');
 const assert = require('node:assert/strict');
-const script = fs.readFileSync(require('node:path').join(__dirname, '..', 'assets', 'bandit.js'), 'utf8');
+const assets = require('node:path').join(__dirname, '..', 'assets');
+const script = fs.readFileSync(require('node:path').join(assets, 'words.js'), 'utf8') + '\n' + fs.readFileSync(require('node:path').join(assets, 'bandit.js'), 'utf8');
 const core = script.slice(0, script.indexOf('const byId='));
 const selection = script.slice(script.indexOf('function eligible('), script.indexOf('function cell('));
 const context = vm.createContext({});
