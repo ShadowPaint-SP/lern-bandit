@@ -69,6 +69,68 @@ test('shutters close before the box shakes, and reopening keeps the practice ans
   await expect(page.locator('#announcement')).toContainText('Wie viele sind rechts?');
 });
 
+test('the equation can stay covered until revealed and resets for each new task', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/schuettelbox.html');
+  const setting = page.getByRole('checkbox', { name: 'Plusaufgabe verdecken', exact: true });
+  const equation = page.locator('#equation');
+  const reveal = page.getByRole('button', { name: 'Plusaufgabe aufdecken', exact: true });
+  const shake = page.getByRole('button', { name: 'Schütteln!', exact: true });
+  await expect(equation).toBeVisible();
+  await setting.check();
+  await expect(equation).toBeHidden();
+  await expect(equation).toHaveAttribute('aria-hidden', 'true');
+  await expect(reveal).toBeVisible();
+  await expect(page.locator('#announcement')).toContainText('Die Plusaufgabe ist verdeckt.');
+  await reveal.focus();
+  await page.keyboard.press('Space');
+  await expect(equation).toBeVisible();
+  await expect(equation).toHaveAttribute('aria-hidden', 'false');
+  await expect(shake).toBeFocused();
+  await shake.click();
+  await expect(shake).toBeEnabled();
+  await expect(equation).toBeHidden();
+  await expect(page.locator('#announcement')).not.toContainText('plus');
+  await page.getByRole('button', { name: 'Ergänzen', exact: true }).click();
+  await reveal.click();
+  await expect(page.locator('#right-number')).toHaveText('?');
+  await expect(page.locator('#cover-right')).toHaveAttribute('aria-expanded', 'false');
+  await page.getByRole('button', { name: 'Rechtes Fach aufdecken', exact: true }).click();
+  await expect(page.locator('#right-number')).not.toHaveText('?');
+  await page.getByRole('spinbutton', { name: 'Kugeln', exact: true }).fill('20');
+  await page.getByRole('spinbutton', { name: 'Kugeln', exact: true }).press('Enter');
+  await expect(equation).toBeHidden();
+  await setting.uncheck();
+  await expect(equation).toBeVisible();
+  await expect(page.locator('#total-number')).toHaveText('20');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test('math settings offer the twenties range on a narrow screen', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/bandit.html?fach=mathe');
+  await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
+  await page.getByRole('checkbox', { name: /^Zehner/ }).uncheck();
+  await page.getByRole('checkbox', { name: /^Zwanziger/ }).check();
+  await page.locator('#math-jackpot-enabled').uncheck();
+  await expect(page.locator('#math-preview')).toHaveText('Ergebnisse von 0 bis 20.');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.getByRole('button', { name: 'Übernehmen', exact: true }).click();
+  await page.getByRole('button', { name: 'START', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'START', exact: true })).toBeEnabled();
+  const task = await page.locator('.cell').allTextContents();
+  expect(Number(task[0])).toBeGreaterThanOrEqual(0);
+  expect(Number(task[0])).toBeLessThanOrEqual(20);
+  expect(Number(task[2])).toBeGreaterThanOrEqual(0);
+  expect(Number(task[2])).toBeLessThanOrEqual(20);
+  await page.locator('#math-reveal').click();
+  expect(Number((await page.locator('#math-result').textContent()).replace('= ', ''))).toBeLessThanOrEqual(20);
+  await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
+  await expect(page.getByRole('checkbox', { name: /^Zwanziger/ })).toBeChecked();
+});
+
 test('all pages fit a narrow phone, and direct game links select the right game', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
   for (const url of ['/', '/bandit.html?fach=deutsch', '/bandit.html?fach=mathe', '/schuettelbox.html?n=20', '/silbenfarben.html']) {

@@ -11,7 +11,7 @@ task:(ranges,operations,random,allowOverflow=false)=>createMathTask(new Set(rang
 `, context);
 const {api} = context;
 assert.deepEqual(Array.from(api.MATH_RANGES, range => [range.id, range.min, range.max]), [
- ['zehner', 0, 10], ['hunderter', 10, 100], ['tausender', 100, 1000], ['millionen', 1000, 1000000]
+ ['zehner', 0, 10], ['zwanziger', 0, 20], ['hunderter', 10, 100], ['tausender', 100, 1000], ['millionen', 1000, 1000000]
 ]);
 assert.ok(api.task(['zehner'], ['plus']));
 assert.equal(api.task([], ['plus']), null);
@@ -32,7 +32,7 @@ for (const random of [()=>0, ()=>1-Number.EPSILON, Math.random]) {
 }
 const operationIds=api.MATH_OPERATIONS.map(operation=>operation.id);
 let count=0;
-for (let mask=1;mask<16;mask++) {
+for (let mask=1;mask<(1<<api.MATH_RANGES.length);mask++) {
  const selectedRanges=api.MATH_RANGES.filter((range,index)=>mask & (1<<index));
  const ranges=selectedRanges.map(range=>range.id);
  const limit=Math.max(...selectedRanges.map(range=>range.max));
@@ -75,6 +75,9 @@ for (let i=0;i<1000;i++) {
 assert.deepEqual([...mixedPairs].sort(), ['large-large','large-small','small-large','small-small']);
 const upperSum=api.task(['zehner'], ['plus'],()=>1-Number.EPSILON);
 assert.equal(upperSum.result,10,'Addition may reach the limit exactly.');
+const twentySum=api.task(['zwanziger'], ['plus'],()=>1-Number.EPSILON);
+assert.equal(twentySum.left,20);
+assert.equal(twentySum.result,20,'The twenties range includes 20 and keeps results at most 20.');
 let draws=[0,0,0,1-Number.EPSILON];
 const subtraction=api.task(['zehner'],['minus'],()=>draws.shift());
 assert.equal(subtraction.left,10);

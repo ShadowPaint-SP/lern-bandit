@@ -70,6 +70,14 @@ button { touch-action: manipulation; }
 .box-feet { position: absolute; left: 0; right: 0; top: 100%; display: flex; justify-content: space-between; padding: 0 48px; pointer-events: none; }
 .box-feet span { width: 25px; height: 7px; background: var(--ink); border-radius: 0 0 5px 5px; }
 .learning-area { text-align: center; padding: 22px 0 0; }
+.equation-setting { display: flex; align-items: center; gap: 9px; width: fit-content; margin: -8px 0 22px; font-size: 13px; cursor: pointer; }
+.equation-setting input { width: 18px; height: 18px; margin: 0; accent-color: var(--teal); }
+.equation-panel { position: relative; width: fit-content; margin: 0 auto; }
+.equation.is-covered { visibility: hidden; }
+.equation-cover { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; border: 1px solid #b6cbc0; border-radius: 12px; background: #dce8e0; color: #3b6157; font-size: 14px; }
+.equation-cover[hidden] { display: none; }
+.equation-cover > span { font-family: Grundschrift, sans-serif; font-size: 34px; }
+.equation-cover:hover:enabled { background: #cddfd3; }
 .equation { display: flex; width: fit-content; margin: 0 auto; align-items: center; justify-content: center; gap: 24px; font-family: Grundschrift, sans-serif; font-size: 53px; line-height: 1; font-variant-numeric: tabular-nums; min-height: 65px; }
 .part-number { width: 64px; text-align: center; transition: color .2s; }
 .left-number { color: var(--teal); }.right-number { color: var(--coral); }

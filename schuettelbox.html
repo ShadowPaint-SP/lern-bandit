@@ -7,10 +7,10 @@
     <meta name="description" content="Schütteln, zählen und Zahlen zerlegen. Eine interaktive Schüttelbox im Stil von Lernbandit, für die Grundschule und zu Hause." />
     <title>Schüttelbox · Lernbandit</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <link rel="stylesheet" href="assets/schuettelbox.css?v=3">
+  <link rel="stylesheet" href="assets/schuettelbox.css?v=4">
 <link rel="stylesheet" href="assets/site.css?v=3">
 <script src="assets/site.js?v=3" defer></script>
-<script src="assets/schuettelbox.js?v=3" defer></script>
+<script src="assets/schuettelbox.js?v=4" defer></script>
 </head>
   <body data-page="schuettelbox">
     <div class="page-shell">
@@ -32,6 +32,8 @@
             <div class="mode-switch" role="group" aria-label="Lernmodus"><button type="button" id="discover" aria-pressed="true">Entdecken</button><button type="button" id="practice" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4h14v12H3zM10 4v12" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 4h7v12h-7z" fill="currentColor"/></svg>Ergänzen</button></div>
           </div>
 
+          <label class="equation-setting"><input type="checkbox" id="hide-equation" />Plusaufgabe verdecken</label>
+
           <div class="box-stage">
             <div class="box-topline"><span id="box-instruction">Wie teilen sich die Kugeln auf?</span></div>
             <div class="shake-box" id="shake-box">
@@ -47,7 +49,10 @@
           </div>
 
           <div class="learning-area">
-            <div class="equation" aria-label="Zerlegung" id="equation"><span class="part-number left-number" id="left-number">4</span><span class="math-sign">+</span><span class="part-number right-number" id="right-number">6</span><span class="math-sign">=</span><span class="total-number" id="total-number">10</span></div>
+            <div class="equation-panel">
+              <div class="equation" aria-label="Zerlegung" id="equation"><span class="part-number left-number" id="left-number">4</span><span class="math-sign">+</span><span class="part-number right-number" id="right-number">6</span><span class="math-sign">=</span><span class="total-number" id="total-number">10</span></div>
+              <button type="button" class="equation-cover" id="reveal-equation" aria-controls="equation" aria-expanded="false" hidden><span aria-hidden="true">?</span>Plusaufgabe aufdecken</button>
+            </div>
             <button type="button" class="shake-button" id="shake"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="6" y="6" width="16" height="16" rx="4" transform="rotate(-12 14 14)" stroke="currentColor" stroke-width="2"/><path d="m3 7-1 4m22 6 2-4M8 1l4 1M16 26l4-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="12" r="1.5" fill="currentColor"/><circle cx="17" cy="16" r="1.5" fill="currentColor"/></svg><span id="shake-label">Schütteln!</span></button>
             <p class="keyboard-hint">oder drücke die <kbd>Leertaste</kbd></p>
           </div>
@@ -64,6 +69,7 @@
       <p>Eine Zahl, aufgeteilt in zwei Fächer. Beim Schütteln verteilen sich die Kugeln neu. Zusammen bleiben es gleich viele.</p>
       <ol><li><strong>Wähle eine Zahl.</strong> Mit 2 bis 20 Kugeln kannst du kleine und große Zahlen zerlegen.</li><li><strong>Schüttle die Box.</strong> Zähle die Kugeln auf beiden Seiten. Welche Plusaufgabe entsteht?</li><li><strong>Verdecke ein Fach.</strong> Wie viele Kugeln fehlen zur ganzen Zahl? Tippe auf „Aufdecken“, um nachzusehen.</li></ol>
       <p>Im Modus „Ergänzen“ bleibt das rechte Fach nach jedem Schütteln verdeckt. Die Leertaste schüttelt, mit Tab erreichst du die anderen Knöpfe.</p>
+      <p>Mit „Plusaufgabe verdecken“ bleibt auch die Aufgabe unter der Box verborgen. Tippe auf „Plusaufgabe aufdecken“, um sie zu sehen. Beim nächsten Schütteln wird sie wieder verdeckt.</p>
       <div class="font-credit">Schrift: Grundschrift von Christian Urff, unverändert übernommen. <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener noreferrer">CC BY 3.0</a>.</div>
       <button type="button" id="help-done" class="dialog-done">Los geht's</button>
     </dialog>

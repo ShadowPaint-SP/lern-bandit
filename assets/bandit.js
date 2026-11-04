@@ -45,6 +45,7 @@ function isJackpot(round,enabled,randomValue=Math.random()){
 }
 const MATH_RANGES=[
  {id:'zehner',label:'Zehner',min:0,max:10},
+ {id:'zwanziger',label:'Zwanziger',min:0,max:20},
  {id:'hunderter',label:'Hunderter',min:10,max:100},
  {id:'tausender',label:'Tausender',min:100,max:1000},
  {id:'millionen',label:'Millionen',min:1000,max:1000000}

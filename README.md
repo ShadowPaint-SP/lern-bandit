@@ -6,7 +6,7 @@ Vier Lernwerkzeuge für die Grundschule mit gemeinsamer Startseite, Logo und ein
 
 - **Silben-Bandit:** 2092 Wörter mit hinterlegten Lesesilben. Buchstaben, Lautverbindungen und Silbenanzahl lassen sich auswählen. Bei zwei Silben erscheint ein Stern an einer zufälligen Stelle.
 - **Mathe-Bandit:** Plus, Minus und Mal mit kombinierbaren Zahlenbereichen. Das Ergebnis lässt sich aufdecken und wieder verdecken.
-- **Schüttelbox:** Zahlen von 2 bis 20 zerlegen. Beide Abdeckungen fahren vor dem Schütteln zu. Nach der Boxanimation öffnet sich die neue Verteilung in Fünferreihen. Im Modus „Ergänzen“ bleibt rechts verdeckt. Die Leertaste schüttelt ebenfalls.
+- **Schüttelbox:** Zahlen von 2 bis 20 zerlegen. Beide Abdeckungen fahren vor dem Schütteln zu. Nach der Boxanimation öffnet sich die neue Verteilung in Fünferreihen. Im Modus „Ergänzen“ bleibt rechts verdeckt. Optional bleibt auch die Plusaufgabe bis zum Aufdecken verborgen und wird beim nächsten Schütteln wieder verdeckt. Die Leertaste schüttelt ebenfalls.
 
 - **Silbenfarben:** Eigene Texte schreiben und nach jedem Buchstaben jede zweite Silbe einfärben, auch im gerade geschriebenen Wort. Rot ist die Standard-Markierungsfarbe. Schriftgröße, Markierungsfarbe und Silbenbögen sind einstellbar. Die Eingabe nutzt ein natives Textfeld; Textauswahl und Rückgängig bleiben erhalten.
 
@@ -63,6 +63,7 @@ Diese prüfen Navigation und Direktlinks, Einstellungen, Lesen und Rechnen, Lös
 | Bereich | Zahlen auf den Walzen |
 | --- | --- |
 | Zehner | 0 bis 10 |
+| Zwanziger | 0 bis 20 |
 | Hunderter | 10 bis 100 |
 | Tausender | 100 bis 1000 |
 | Millionen | 1000 bis 1000000 |

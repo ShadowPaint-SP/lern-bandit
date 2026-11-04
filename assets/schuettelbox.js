@@ -50,6 +50,9 @@ const shakeLabel = element('shake-label');
 const box = element('shake-box');
 const leftNumber = element('left-number');
 const rightNumber = element('right-number');
+const equation = element('equation');
+const hideEquation = element('hide-equation');
+const revealEquation = element('reveal-equation');
 const announcement = element('announcement');
 const help = element                   ('help');
 const covers = [element                   ('cover-left'), element                   ('cover-right')]         ;
@@ -57,11 +60,12 @@ const discoverButton = element                   ('discover');
 const practiceButton = element                   ('practice');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const presets = [...document.querySelectorAll                   ('[data-quantity]')];
-const controls = [quantityInput, element                   ('decrease'), element                   ('increase'), discoverButton, practiceButton, ...presets];
+const controls = [quantityInput, element                   ('decrease'), element                   ('increase'), discoverButton, practiceButton, hideEquation, ...presets];
 let quantity = clampQuantity(Number(new URLSearchParams(location.search).get('n') ?? 10));
 let balls         = createBalls(quantity, Math.floor(quantity * .4));
 let covered                     = [false, false];
 let practice = false;
+let equationCovered = false;
 let busy = false;
 let shakeAnimation                   = null;
 let shakeRun = 0;
@@ -108,6 +112,7 @@ function resizeCanvas()       {
 }
 
 function describeResult()         {
+  if (equationCovered) return `Die Plusaufgabe ist verdeckt. Zähle die Kugeln in den offenen Fächern. Insgesamt sind es ${quantity} Kugeln.`;
   const left = countLeft(balls), right = quantity - left;
   if (covered[0] && covered[1]) return `Beide Fächer sind verdeckt. Insgesamt sind es ${quantity} Kugeln.`;
   if (covered[0]) return `Rechts sind ${right} Kugeln. Wie viele sind links? Zusammen sind es ${quantity}.`;
@@ -116,6 +121,11 @@ function describeResult()         {
 }
 
 function renderResult(speak = true)       {
+  equation.classList.toggle('is-covered', equationCovered);
+  equation.setAttribute('aria-hidden', String(equationCovered));
+  revealEquation.hidden = !equationCovered;
+  revealEquation.disabled = busy;
+  revealEquation.setAttribute('aria-expanded', String(!equationCovered));
   const left = countLeft(balls);
   leftNumber.textContent = busy || covered[0] ? '?' : String(left);
   rightNumber.textContent = busy || covered[1] ? '?' : String(quantity - left);
@@ -147,6 +157,7 @@ function setQuantity(value        )       {
   quantity = clampQuantity(value);
   balls = createBalls(quantity, Math.floor(quantity * .4));
   covered = practice ? [false, true] : [false, false];
+  equationCovered = hideEquation.checked;
   updateControls();
   renderResult();
   draw();
@@ -156,6 +167,7 @@ function setMode(next         )       {
   if (busy) return;
   practice = next;
   covered = practice ? [false, true] : [false, false];
+  equationCovered = hideEquation.checked;
   updateControls();
   renderResult();
 }
@@ -167,7 +179,7 @@ function setBusy(next         )       {
   shakeLabel.textContent = next ? 'Schüttelt …' : 'Schütteln!';
   controls.forEach(control => { control.disabled = next; });
   covers.forEach(cover => { cover.disabled = next; });
-  element('equation').setAttribute('aria-busy', String(next));
+  equation.setAttribute('aria-busy', String(next));
   updateControls();
 }
 
@@ -187,6 +199,7 @@ async function shake()                {
   if (busy || help.open) return;
   const run = ++shakeRun;
   if (practice) covered = [false, true];
+  equationCovered = hideEquation.checked;
   setBusy(true);
   renderResult(false);
   if (reduceMotion.matches) {
@@ -225,6 +238,16 @@ element('increase').addEventListener('click', () => setQuantity(quantity + 1));
 presets.forEach(button => button.addEventListener('click', () => setQuantity(Number(button.dataset.quantity))));
 discoverButton.addEventListener('click', () => setMode(false));
 practiceButton.addEventListener('click', () => setMode(true));
+hideEquation.addEventListener('change', () => {
+  equationCovered = hideEquation.checked;
+  renderResult();
+});
+revealEquation.addEventListener('click', () => {
+  if (busy) return;
+  equationCovered = false;
+  renderResult();
+  shakeButton.focus();
+});
 covers.forEach((cover, index) => cover.addEventListener('click', () => {
   if (busy) return;
   covered[index] = !covered[index];
