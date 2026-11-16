@@ -1,12 +1,12 @@
 const { test, expect } = require('@playwright/test');
 
-test('the landing page links to four learning tools with a shared navigation', async ({ page }) => {
+test('the landing page links to the learning tools with a shared navigation', async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Was spielen wir heute?');
-  await expect(page.getByRole('navigation', { name: 'Lernwerkzeuge' }).locator('.nav-submenu a')).toHaveCount(4);
+  await expect(page.getByRole('navigation', { name: 'Lernwerkzeuge' }).locator('.nav-submenu a')).toHaveCount(5);
   await page.locator('.game-choice').filter({ hasText: 'Silben-Bandit' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Der Silben-Bandit');
   await expect(page.locator('.game-nav a[aria-current="page"]')).toHaveText('Silben-Bandit');
@@ -133,9 +133,9 @@ test('math settings offer the twenties range on a narrow screen', async ({ page 
 
 test('all pages fit a narrow phone, and direct game links select the right game', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
-  for (const url of ['/', '/bandit.html?fach=deutsch', '/bandit.html?fach=mathe', '/schuettelbox.html?n=20', '/silbenfarben.html']) {
+  for (const url of ['/', '/bandit.html?fach=deutsch', '/bandit.html?fach=mathe', '/schuettelbox.html?n=20', '/silbenfarben.html', '/buchstabengeburtstag.html']) {
     await page.goto(url);
-    await expect(page.getByRole('navigation', { name: 'Lernwerkzeuge' }).locator('.nav-submenu a')).toHaveCount(4);
+    await expect(page.getByRole('navigation', { name: 'Lernwerkzeuge' }).locator('.nav-submenu a')).toHaveCount(5);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     if (url.includes('fach=mathe')) await expect(page.locator('#math-reveal')).toBeVisible();
     if (url.includes('schuettelbox')) await expect(page.locator('#quantity')).toHaveValue('20');
@@ -149,7 +149,7 @@ test('subject menus support switching, keyboard dismissal and narrow screens', a
   await expect(german).toHaveAttribute('data-current', 'true');
   await german.click();
   await expect(page.locator('#nav-deutsch')).toBeVisible();
-  await expect(page.locator('#nav-deutsch a')).toHaveText(['Silben-Bandit', 'Silbenfarben']);
+  await expect(page.locator('#nav-deutsch a')).toHaveText(['Silben-Bandit', 'Silbenfarben', 'Buchstabengeburtstag']);
   await math.click();
   await expect(page.locator('#nav-deutsch')).toBeHidden();
   await expect(page.locator('#nav-mathe')).toBeVisible();
@@ -159,6 +159,7 @@ test('subject menus support switching, keyboard dismissal and narrow screens', a
   await german.focus();
   await page.keyboard.press('ArrowDown');
   await expect(page.locator('#nav-deutsch a').first()).toBeFocused();
+  await page.keyboard.press('ArrowDown');
   await page.keyboard.press('ArrowDown');
   await expect(page.locator('#nav-deutsch a').last()).toBeFocused();
   await page.keyboard.press('Escape');

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4eb">
+  <meta name="description" content="Plane die Einführung von Buchstaben im Kalender und entdecke die Buchstabengeburtstage deiner Klasse. Namen und Termine bleiben auf deinem Gerät.">
+  <title>Buchstabengeburtstag · Lernbandit</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css?v=4">
+  <link rel="stylesheet" href="assets/buchstabengeburtstag.css?v=3">
+  <script src="assets/site.js?v=4" defer></script>
+  <script src="assets/buchstabengeburtstag-model.js?v=1" defer></script>
+  <script src="assets/buchstabengeburtstag.js?v=2" defer></script>
+</head>
+<body data-page="buchstabengeburtstag">
+  <div class="page-shell planner-shell">
+    <header class="site-header" data-site-header>
+      <nav class="game-nav" data-game-nav aria-label="Lernwerkzeuge"></nav>
+      <button type="button" class="planner-settings-button" id="settings-open">Einstellungen</button>
+    </header>
+    <main>
+      <section class="intro planner-intro" aria-labelledby="page-title">
+        <h1 id="page-title">Buchstabengeburtstag</h1>
+        <p>Plane die Buchstaben. Entdecke, wann ein Name vollständig ist.</p>
+      </section>
+      <p id="storage-warning" class="planner-warning" role="alert" hidden></p>
+      <section class="letter-shelf" aria-labelledby="letters-title">
+        <div class="shelf-heading"><h2 id="letters-title">Deine Buchstaben</h2><span id="planned-count"></span></div>
+        <div id="letter-bank" class="letter-bank" aria-label="Buchstaben auswählen"></div>
+        <div class="selection-toolbar">
+          <p id="selection-hint" role="status">Ziehe einen Buchstaben auf einen Tag. Oder klicke erst den Buchstaben, dann den Tag an.</p>
+          <div class="selection-actions"><button type="button" id="remove-letter" hidden>Aus Planung nehmen</button><button type="button" id="cancel-letter" hidden>Auswahl aufheben</button></div>
+        </div>
+      </section>
+      <div class="planner-layout">
+        <section class="calendar" aria-labelledby="month-title">
+          <div class="calendar-toolbar">
+            <div class="month-navigation"><button type="button" id="previous-month" aria-label="Vorheriger Monat">‹</button><h2 id="month-title" aria-live="polite"></h2><button type="button" id="next-month" aria-label="Nächster Monat">›</button></div>
+            <button type="button" id="today-month">Heute</button>
+          </div>
+          <div class="weekday-row" aria-hidden="true"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div>
+          <div id="calendar-days" class="calendar-days"></div>
+          <p class="calendar-key"><span aria-hidden="true">✦</span> Ein Name hat Buchstabengeburtstag, sobald alle seine Buchstaben eingeführt sind.</p>
+        </section>
+        <section class="class-names" aria-labelledby="names-title">
+          <h2 id="names-title">Namen deiner Klasse</h2>
+          <form id="names-form">
+            <label for="names-input">Name eintragen</label>
+            <input type="text" id="names-input" placeholder="Emma" maxlength="80" aria-describedby="names-hint" spellcheck="false" autocomplete="off" enterkeyhint="done">
+            <p id="names-hint">Mit Enter hinzufügen. Bis zu 80 Zeichen.</p>
+            <button type="submit" class="add-names">Name hinzufügen</button>
+            <p id="names-error" class="names-error" role="alert" hidden></p>
+          </form>
+          <p id="empty-names" class="empty-names">Trage die Namen deiner Klasse ein. Sobald alle Buchstaben verplant sind, erscheint hier das Datum und im Kalender der Name.</p>
+          <ul id="names-list" class="names-list"></ul>
+        </section>
+      </div>
+      <details class="planner-about"><summary>Wie wird der Buchstabengeburtstag berechnet?</summary><p>Der zuletzt eingeführte Buchstabe macht den Namen vollständig. Bei Emma sind das E, M und A. Jeder Buchstabe zählt einmal, unabhängig von Groß- und Kleinschreibung. Ä, Ö, Ü und ß haben eigene Plättchen. Andere Akzente zählen als Grundbuchstabe, zum Beispiel É als E. Leerzeichen und Bindestriche zählen nicht.</p><p>Du kannst mehrere Buchstaben auf denselben Tag legen und bereits geplante Buchstaben verschieben. Ziehe einen geplanten Buchstaben aus dem Kalender heraus, um seinen Termin zu entfernen. Oder wähle ihn und dann „Aus Planung nehmen“. Die Geburtstage passen sich automatisch an. Nicht verfügbare Buchstaben werden beim Namen als offen angezeigt.</p></details>
+      <p id="planner-announcement" class="sr-only" role="status" aria-live="polite"></p>
+    </main>
+    <footer class="site-footer"><span>Namen und Termine bleiben in diesem Browser auf deinem Gerät.</span><a href="index.html">Zur Startseite</a></footer>
+  </div>
+  <dialog id="planner-settings" class="planner-settings" aria-labelledby="settings-title">
+    <div class="settings-heading"><h2 id="settings-title">Einstellungen</h2><button type="button" id="settings-close" aria-label="Einstellungen schließen">×</button></div>
+    <h3>Gespeicherte Planerdaten</h3>
+    <p>Namen und Buchstabentermine werden automatisch in diesem Browser auf deinem Gerät gespeichert. Sie bleiben nach dem Schließen erhalten.</p>
+    <p>„Daten löschen“ entfernt alle Namen und Termine dieses Planers. Das lässt sich nicht rückgängig machen.</p>
+    <button type="button" id="delete-data" class="danger-button">Daten löschen</button>
+    <div id="delete-confirmation" hidden>
+      <p>Alle Namen und Buchstabentermine endgültig löschen?</p>
+      <div class="delete-actions"><button type="button" id="delete-cancel">Abbrechen</button><button type="button" id="delete-confirm" class="danger-button">Alles endgültig löschen</button></div>
+    </div>
+    <p id="delete-status" role="status"></p>
+  </dialog>
+</body>
+</html>

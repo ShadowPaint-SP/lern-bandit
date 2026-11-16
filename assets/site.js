@@ -14,6 +14,7 @@
     { id: 'deutsch', name: 'Deutsch', tools: [
       { id: 'silben', name: 'Silben-Bandit', href: 'bandit.html?fach=deutsch' },
       { id: 'silbenfarben', name: 'Silbenfarben', href: 'silbenfarben.html' },
+      { id: 'buchstabengeburtstag', name: 'Buchstabengeburtstag', href: 'buchstabengeburtstag.html' },
     ] },
     { id: 'mathe', name: 'Mathe', tools: [
       { id: 'mathe', name: 'Mathe-Bandit', href: 'bandit.html?fach=mathe' },

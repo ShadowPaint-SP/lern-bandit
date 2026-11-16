@@ -1,6 +1,6 @@
 # Lernbandit
 
-Vier Lernwerkzeuge für die Grundschule mit gemeinsamer Startseite, Logo und einer Navigation nach den Fächern Deutsch und Mathe. Die Website läuft ohne Anmeldung, Backend oder externe Abrufe.
+Fünf Lernwerkzeuge für die Grundschule mit gemeinsamer Startseite, Logo und einer Navigation nach den Fächern Deutsch und Mathe. Die Website läuft ohne Anmeldung, Backend oder externe Abrufe.
 
 [Website öffnen](https://shadowpaint-sp.github.io/lern-bandit/)
 
@@ -10,23 +10,30 @@ Vier Lernwerkzeuge für die Grundschule mit gemeinsamer Startseite, Logo und ein
 
 - **Silbenfarben:** Eigene Texte schreiben und nach jedem Buchstaben jede zweite Silbe einfärben, auch im gerade geschriebenen Wort. Rot ist die Standard-Markierungsfarbe. Schriftgröße, Markierungsfarbe und Silbenbögen sind einstellbar. Die Eingabe nutzt ein natives Textfeld; Textauswahl und Rückgängig bleiben erhalten.
 
+- **Buchstabengeburtstag:** Im Deutsch-Menü Buchstaben auf einen Kalendertag ziehen oder erst den Buchstaben und dann den Tag anklicken. Namen einzeln im einzeiligen Eingabefeld eintragen und mit Enter oder „Name hinzufügen“ übernehmen. Das Feld wird danach geleert und bleibt für den nächsten Namen bereit. Sobald alle unterschiedlichen Buchstaben eines Namens einen Einführungstermin haben, erscheint der Name am spätesten dieser Termine. Bereits geplante Buchstaben lassen sich verschieben, durch Ablegen außerhalb des Kalenders oder über „Aus Planung nehmen“ entfernen. Geburtstage passen sich dabei automatisch an. Die Datumsanzeige beim Namen führt direkt zum passenden Kalendermonat.
+
+Der Buchstabengeburtstag-Planer speichert Namen und Termine automatisch im `localStorage` dieses Browsers unter `lernbandit.buchstabengeburtstag.v1`. Groß- und Kleinschreibung sowie wiederholte Buchstaben ändern die Berechnung nicht. Ä, Ö, Ü und ß zählen einzeln, andere Akzente als Grundbuchstabe. Nicht verfügbare Buchstaben bleiben beim Namen als offen sichtbar. Die Einstellungen bieten „Daten löschen“ mit anschließender Bestätigung für alle Planerdaten. Andere Werkzeuge bleiben davon unberührt. Offene Planer-Tabs übernehmen Änderungen und Löschungen. Bei blockierter Speicherung erscheint ein Hinweis, der Planer bleibt für den aktuellen Seitenaufruf nutzbar. Die Speicherung gilt für den jeweiligen Browser und die aufgerufene Website beziehungsweise lokale Datei. Sie wird nicht zwischen Geräten oder verschiedenen Website-Adressen übertragen.
+
 In den beiden Banditen können Drei-Sterne-Treffer zufällig mit 6 % Chance auftreten, spätestens beim zehnten Dreh nach dem letzten Treffer. In den Einstellungen abschaltbar. Die Einstellungen gelten für den jeweiligen Seitenaufruf.
 
 ## Seiten und Dateien
 
 | Datei | Aufgabe |
 | --- | --- |
-| `index.html` | Startseite mit vier Werkzeugvorschauen |
+| `index.html` | Startseite mit vier Spielvorschauen und einem Link zum Planer |
 | `bandit.html?fach=deutsch` | Silben-Bandit |
 | `bandit.html?fach=mathe` | Mathe-Bandit |
 | `schuettelbox.html` | Schüttelbox, Startmenge optional über `?n=7` |
 | `silbenfarben.html` | Eigene Texte mit farbig markierten Silben |
+| `buchstabengeburtstag.html` | Buchstaben im Kalender planen und Buchstabengeburtstage anzeigen |
 | `assets/site.css` / `assets/site.js` | Gemeinsame Gestaltung, Logo und Fach-Untermenüs |
 | `assets/bandit.css` / `assets/bandit.js` | Gemeinsame Engine der beiden Banditen |
 | `assets/schuettelbox.css` / `assets/schuettelbox.js` | Abdeckungen, Mengen und Boxanimation |
 | `assets/words.js` | Gemeinsamer Wortschatz mit 2092 festgelegten Lesesilben-Zerlegungen |
 | `assets/syllables.js` / `assets/vendor/de-syllable.js` | Silbentrennung mit eingebettetem WebAssembly-Modul |
 | `assets/silbenfarben.css` / `assets/silbenfarben.js` | Schreibfläche und Einstellungen |
+| `assets/buchstabengeburtstag.css` / `assets/buchstabengeburtstag.js` | Kalender, Namensliste, lokale Speicherung und Löschen |
+| `assets/buchstabengeburtstag-model.js` | Namensnormalisierung, Geburtstagsberechnung und Prüfung gespeicherter Daten |
 
 Alle Seiten und der Ordner `assets/` gehören zusammen. Nach dem Herunterladen lassen sich die HTML-Dateien direkt öffnen und offline benutzen. Die Schrift ist in der gemeinsamen CSS-Datei eingebettet. Die Website benötigt keinen Build.
 
@@ -40,13 +47,15 @@ Anschließend `http://127.0.0.1:8765/` öffnen.
 
 ## Prüfen
 
-Die Tests der Wortauswahl, der Rechenaufgaben und der Silbentrennung benötigen Node.js ab Version 18 und keine Installation:
+Die Tests der Wortauswahl, der Rechenaufgaben, der Silbentrennung und der Buchstabengeburtstage benötigen Node.js ab Version 18 und keine Installation:
 
 ```sh
 npm test
 ```
 
 Sie prüfen Silbenreihenfolge, Sternpositionen, Trefferregeln sowie Rechenaufgaben mit allen Kombinationen aus Zahlenbereichen und Rechenzeichen, einschließlich Grenzfällen und freigegebener Ergebnisgrenze. Der Silbentest prüft außerdem alle 2092 gemeinsamen Wortzerlegungen, unbekannte Wörter, Groß-/Kleinschreibung und kombinierte Umlautzeichen.
+
+Die Planertests prüfen die Berechnung bei wiederholten und fehlenden Buchstaben, verschobene Termine über Jahresgrenzen, Umlaute, Akzente, ungültige Kalenderdaten und beschädigte Speicherdaten.
 
 Für die Browsertests mit Playwright, Node.js ab Version 20 und Python 3:
 
@@ -57,6 +66,8 @@ npm run test:browser
 ```
 
 Diese prüfen Navigation und Direktlinks, Einstellungen, Lesen und Rechnen, Lösungsanzeige, das Schließen der Abdeckungen vor der Boxanimation und die Darstellung auf einem schmalen Handy. Für Silbenfarben werden sofortige Markierung, Cursor, Rückgängig, Einfügen von Text, Einstellungen, Scrollen und der direkte Offline-Aufruf als lokale Datei geprüft.
+
+Für den Planer werden Ziehen und Verschieben, Klick- und Tastaturbedienung, automatische Geburtstage, Monatswechsel, Speicherung beim Neuladen, Löschen mit Bestätigung, Synchronisierung offener Tabs, Speicherfehler, sichere Namensdarstellung und die lokale Offline-Nutzung geprüft.
 
 ## Zahlenbereiche beim Mathe-Bandit
 

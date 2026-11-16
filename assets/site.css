@@ -76,6 +76,19 @@ h1 { position: relative; font-family: Grundschrift, sans-serif; font-size: clamp
 .game-choice .mini-writing p { margin: 0; max-width: none; font: inherit; color: inherit; line-height: inherit; }
 .mini-writing p > span { color: #c23e32; }
 .home-note { text-align: center; color: #7a8072; font-size: 12px; padding: 9px 0 19px; }
+.planner-home-link { display: flex; align-items: center; gap: 22px; padding: 20px 24px; border: 1.5px solid #a7b9a6; border-radius: 14px; background: #edf0e7; text-decoration: none; }
+.planner-home-link > span:last-child { min-width: 0; }
+.planner-home-link strong { display: block; margin-bottom: 6px; font: 29px/1.25 Grundschrift, sans-serif; overflow-wrap: anywhere; }
+.planner-home-link > span > span { display: block; font-size: 12px; line-height: 1.7; color: #53664f; }
+.planner-home-link:hover { border-color: var(--teal); background: #e4ecdf; }
+.mini-calendar { flex: 0 0 105px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; padding: 8px; border: 1.5px solid var(--ink); border-top: 9px solid var(--teal); border-radius: 5px; background: #fffef8; }
+.mini-calendar > span { display: grid; place-items: center; background: var(--yellow); border-radius: 3px; font: 22px/1.3 Grundschrift, sans-serif; }
+.mini-calendar b { grid-column: 1 / -1; padding-top: 3px; color: #195a47; font-size: 12px; font-weight: 600; }
+@media (max-width: 480px) {
+  .planner-home-link { gap: 14px; padding: 17px 14px; }
+  .planner-home-link strong { font-size: 24px; }
+  .mini-calendar { flex-basis: 79px; padding: 6px; }
+}
 
 @media (max-width: 1050px) {
   .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
